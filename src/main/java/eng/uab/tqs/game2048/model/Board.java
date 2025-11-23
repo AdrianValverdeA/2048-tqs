@@ -35,4 +35,12 @@ public class Board {
       System.out.println("");
     }
   }
+
+  public void randomInicialize() {
+    for (int i = 0; i < 2; i++) {
+      int x = new Random().nextInt(SIZE);
+      int y = new Random().nextInt(SIZE);
+      board[x][y] = new Block(2, InfoGame.Color.GREEN);
+    }
+  }
 }
