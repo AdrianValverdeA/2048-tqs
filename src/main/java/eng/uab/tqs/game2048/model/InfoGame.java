@@ -4,8 +4,6 @@ public class InfoGame {
     UP, DOWN, LEFT, RIGHT
   }
 
-  public static final int SIZE = 4;
-
   public static enum Color{
     GREEN(1),
     PINK(2),

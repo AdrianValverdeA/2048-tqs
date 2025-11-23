@@ -2,7 +2,6 @@ package eng.uab.tqs.game2048.model;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static eng.uab.tqs.game2048.model.Generator.genRandom;
 import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
 
 public class Board {
@@ -14,7 +13,7 @@ public class Board {
   public Board() {
     board = new Block[SIZE][SIZE];
     score = 0;
-
+    gen = new Generator();
     for (int i = 0; i < SIZE; i++) {
       for (int j = 0; j < SIZE; j++) {
         board[i][j] = new Block(0, InfoGame.Color.NONE);
@@ -43,12 +42,12 @@ public class Board {
   public void randomInicialize() {
     int x1, y1, x2, y2;
 
-    x1 = genRandom();
-    y1 = genRandom();
+    x1 = gen.genRandom();
+    y1 = gen.genRandom();
 
     do {
-      x2 = genRandom();
-      y2 = genRandom();
+      x2 = gen.genRandom();
+      y2 = gen.genRandom();
     } while (x1 == x2 && y1 == y2);
 
     board[x1][y1] = new Block(2, InfoGame.Color.GREEN);

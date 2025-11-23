@@ -6,7 +6,7 @@ import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
 
 public class Generator {
 
-  public static int genRandom() {
+  public int genRandom() {
     int x = new Random().nextInt(SIZE);
     return x;
   }
