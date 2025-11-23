@@ -1,5 +1,6 @@
 package eng.uab.tqs.game2048.model;
 
+import eng.uab.tqs.game2048.model.mock.GeneratorMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,10 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
   Board board;
+  Generator gen;
 
   @BeforeEach
   void setUp() {
     board = new Board();
+    gen = new GeneratorMock();
   }
 
   @Test
@@ -45,4 +48,14 @@ class BoardTest {
     assertEquals(counter,2);
   }
 
+  @Test
+  void randomInicializeMockTest() {
+    board.setGenerator(gen);
+    board.randomInicialize();
+    Block[][] b = board.getBoard();
+    assertEquals(b[1][2].getValue(),2);
+    assertEquals(b[1][2].getColor(),InfoGame.Color.GREEN);
+    assertEquals(b[3][3].getValue(),2);
+    assertEquals(b[3][3].getColor(),InfoGame.Color.GREEN);
+  }
 }
