@@ -1,13 +1,20 @@
 package eng.uab.tqs.game2048.model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
+  Board board;
+
+  @BeforeEach
+  void setUp() {
+    board = new Board();
+  }
+
   @Test
   void constructorTest() {
-    Board board = new Board();
     Block[][] b = board.getBoard();
     for (Block[] blockLine : b){
       for (Block block : blockLine){
