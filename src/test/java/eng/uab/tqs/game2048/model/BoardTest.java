@@ -18,5 +18,24 @@ class BoardTest {
     assertEquals(board.getScore(),0);
   }
 
+  @Test
+  void randomInicializeTest() {
+    board.randomInicialize();
+    Block[][] b = board.getBoard();
+    int values = 0;
+    int counter = 0;
+    for (Block[] blockLine : b){
+      for (Block block : blockLine){
+        int value = block.getValue();
+        if(value!=0)
+        {
+          values+=value;
+          counter++;
+        }
+      }
+    }
+    assertEquals(values,4);
+    assertEquals(counter,2);
+  }
 
 }
