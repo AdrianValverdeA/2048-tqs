@@ -57,4 +57,30 @@ public class Board {
   public void setGenerator(Generator gen) {
     this.gen = gen;
   }
+
+  public int[] moveBlock(int i, int j, char c) {
+    int i2 = i;
+    int j2 = j;
+    switch (c) {
+      case 'a':
+        j2 = j-1;
+        break;
+
+      case 'w':
+        i2 = i-1;
+        break;
+
+      case 'd':
+        j2 = j+1;
+        break;
+
+      case 's':
+        i2 = i+1;
+        break;
+    }
+    board[i2][j2] = new Block(board[i][j].getValue(), board[i][j].getColor());
+    board[i][j].resetBlock();
+    int[] coords = {i2,j2};
+    return coords;
+  }
 }
