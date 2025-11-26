@@ -59,4 +59,11 @@ class BlockTest {
     assertEquals(block.getValue(), 2048);
     assertEquals(block.getColor(), InfoGame.Color.BLACK);
   }
+
+  public void resetBlockTest() {
+    Block block = new Block(2, InfoGame.Color.GREEN);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+  }
 }
