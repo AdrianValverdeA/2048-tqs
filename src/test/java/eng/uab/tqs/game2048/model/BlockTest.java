@@ -60,6 +60,7 @@ class BlockTest {
     assertEquals(block.getColor(), InfoGame.Color.BLACK);
   }
 
+  @Test
   public void resetBlockTest() {
     Block block = new Block(2, InfoGame.Color.GREEN);
     block.resetBlock();

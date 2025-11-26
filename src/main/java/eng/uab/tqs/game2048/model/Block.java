@@ -26,4 +26,9 @@ public class Block
   {
     return this.color;
   }
+
+  public void resetBlock() {
+    this.value = 0;
+    this.color = InfoGame.Color.NONE;
+  }
 }
