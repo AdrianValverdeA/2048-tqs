@@ -83,4 +83,34 @@ public class Board {
     int[] coords = {i2,j2};
     return coords;
   }
+
+  public boolean canMove(int i, int j, char c) {
+    boolean result = false;
+    switch (c) {
+      case 'a':
+        if (j > 0) {
+          result = (0 == board[i][j - 1].getValue());
+        }
+        break;
+
+      case 'w':
+        if (i > 0) {
+          result = (0 == board[i - 1][j].getValue());
+        }
+        break;
+
+      case 'd':
+        if (j < SIZE - 1) {
+          result = (0 == board[i][j + 1].getValue());
+        }
+        break;
+
+      case 's':
+        if (i < SIZE - 1) {
+          result = (0 == board[i + 1][j].getValue());
+        }
+        break;
+    }
+    return result;
+  }
 }
