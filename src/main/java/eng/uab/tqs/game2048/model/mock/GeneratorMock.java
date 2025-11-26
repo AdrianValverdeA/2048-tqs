@@ -14,6 +14,9 @@ public class GeneratorMock extends Generator
   private int[] genRandomArray = {1, 2, 3, 3};
 
   public int genRandom() {
+    if (counter == 4) {
+      counter = 0;
+    }
     return genRandomArray[counter++];
   }
 
