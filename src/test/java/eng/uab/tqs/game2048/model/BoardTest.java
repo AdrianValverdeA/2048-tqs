@@ -58,4 +58,59 @@ class BoardTest {
     assertEquals(b[3][3].getValue(),2);
     assertEquals(b[3][3].getColor(),InfoGame.Color.GREEN);
   }
+
+  @Test
+  void moveBlockTest()
+  {
+    board.setGenerator(gen);
+    board.randomInicialize();
+    Block[][] b = board.getBoard();
+    assertEquals(b[0][2].getValue(),0);
+    board.moveBlock(1,2,"w"); //up
+    b = board.getBoard();
+    assertEquals(b[0][2].getValue(),2);
+    assertEquals(b[1][2].getValue(),0);
+
+    board.randomInicialize();
+    b = board.getBoard();
+    assertEquals(b[1][1].getValue(),0);
+    board.moveBlock(1,2,"a"); //left
+    b = board.getBoard();
+    assertEquals(b[1][1].getValue(),2);
+    assertEquals(b[1][2].getValue(),0);
+
+    board.randomInicialize();
+    b = board.getBoard();
+    assertEquals(b[2][2].getValue(),0);
+    board.moveBlock(1,2,"s"); //down
+    b = board.getBoard();
+    assertEquals(b[2][2].getValue(),2);
+    assertEquals(b[1][2].getValue(),0);
+
+    board.randomInicialize();
+    b = board.getBoard();
+    assertEquals(b[1][3].getValue(),0);
+    board.moveBlock(1,2,"d"); //right
+    b = board.getBoard();
+    assertEquals(b[1][3].getValue(),2);
+    assertEquals(b[1][2].getValue(),0);
+
+    board.randomInicialize();
+    try {
+      board.moveBlock(3,3,"d"); //right
+    } catch (Exception e) {
+      fail("Out of index");
+    }
+    b = board.getBoard();
+    assertEquals(b[3][3].getValue(),2);
+
+    board.randomInicialize();
+    try {
+      board.moveBlock(3,3,"s"); //down
+    } catch (Exception e) {
+      fail("Out of index");
+    }
+    b = board.getBoard();
+    assertEquals(b[3][3].getValue(),2);
+  }
 }
