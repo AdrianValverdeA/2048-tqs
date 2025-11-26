@@ -136,4 +136,20 @@ class BoardTest {
     assertEquals(b[3][3].getValue(),2);
     */
   }
+
+  @Test
+  public void canMoveTest() {
+    board.setGenerator(gen);
+    board.randomInicialize();
+    Block[][] b = board.getBoard();
+    assertTrue(board.canMove(1,2,'w'));
+    assertTrue(board.canMove(1,2,'a'));
+    assertTrue(board.canMove(1,2,'s'));
+    assertTrue(board.canMove(1,2,'d'));
+    assertFalse(board.canMove(3,3,'s'));
+    assertFalse(board.canMove(3,3,'d'));
+    b[0][0] = new Block(2, InfoGame.Color.GREEN);
+    assertFalse(board.canMove(0,0,'w'));
+    assertFalse(board.canMove(0,0,'a'));
+  }
 }
