@@ -67,4 +67,59 @@ class BlockTest {
     assertEquals(block.getValue(), 0);
     assertEquals(block.getColor(), InfoGame.Color.NONE);
   }
+
+  @Test
+  public void mixTest(){
+    Block block = new Block(2, InfoGame.Color.GREEN);
+    block.mix();
+    assertEquals(block.getValue(), 4);
+    assertEquals(block.getColor(), InfoGame.Color.PINK);
+
+    block.mix();
+    assertEquals(block.getValue(), 8);
+    assertEquals(block.getColor(), InfoGame.Color.YELLOW);
+
+    block.mix();
+    assertEquals(block.getValue(), 16);
+    assertEquals(block.getColor(), InfoGame.Color.ORANGE);
+
+    block.mix();
+    assertEquals(block.getValue(), 32);
+    assertEquals(block.getColor(), InfoGame.Color.RED);
+
+    block.mix();
+    assertEquals(block.getValue(), 64);
+    assertEquals(block.getColor(), InfoGame.Color.BLUE);
+
+    block.mix();
+    assertEquals(block.getValue(), 128);
+    assertEquals(block.getColor(), InfoGame.Color.PURPLE);
+
+    block.mix();
+    assertEquals(block.getValue(), 256);
+    assertEquals(block.getColor(), InfoGame.Color.BROWN);
+
+    block.mix();
+    assertEquals(block.getValue(), 512);
+    assertEquals(block.getColor(), InfoGame.Color.GREY);
+
+    block.mix();
+    assertEquals(block.getValue(), 1024);
+    assertEquals(block.getColor(), InfoGame.Color.NAVY);
+
+    block.mix();
+    assertEquals(block.getValue(), 2048);
+    assertEquals(block.getColor(), InfoGame.Color.BLACK);
+
+    //check it is the last, no changes
+    block.mix();
+    assertEquals(block.getValue(), 2048);
+    assertEquals(block.getColor(), InfoGame.Color.BLACK);
+
+    //check it is none, no changes
+    Block block0 = new Block(0, InfoGame.Color.NONE);
+    block0.mix();
+    assertEquals(block0.getValue(), 0);
+    assertEquals(block0.getColor(), InfoGame.Color.NONE);
+  }
 }
