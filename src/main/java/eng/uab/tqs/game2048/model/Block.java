@@ -31,4 +31,11 @@ public class Block
     this.value = 0;
     this.color = InfoGame.Color.NONE;
   }
+
+  public void mix() {
+    if (this.value > 0 && this.value < 2048) {
+      this.value = this.value * 2;
+      this.color = InfoGame.Color.values()[this.color.getValue() + 1];
+    }
+  }
 }

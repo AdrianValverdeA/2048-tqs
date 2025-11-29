@@ -5,6 +5,7 @@ public class InfoGame {
   }
 
   public static enum Color{
+    NONE(0),
     GREEN(1),
     PINK(2),
     YELLOW(3),
@@ -15,8 +16,7 @@ public class InfoGame {
     BROWN(8),
     GREY(9),
     NAVY(10),
-    BLACK(11),
-    NONE(0);
+    BLACK(11);
 
     private final int value;
 
