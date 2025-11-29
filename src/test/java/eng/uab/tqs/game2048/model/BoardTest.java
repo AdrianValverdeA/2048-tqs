@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
   Board board;
-  Generator gen;
+  GeneratorMock gen;
 
   @BeforeEach
   void setUp() {
@@ -112,6 +112,7 @@ class BoardTest {
     assertEquals(b[1][2].getColor(),InfoGame.Color.NONE);
     assertEquals(newCoords[0], 1);
     assertEquals(newCoords[1], 3);
+    //out of index test
     /*
     board = new Board();
     board.setGenerator(gen);
@@ -151,5 +152,50 @@ class BoardTest {
     b[0][0] = new Block(2, InfoGame.Color.GREEN);
     assertFalse(board.canMove(0,0,'w'));
     assertFalse(board.canMove(0,0,'a'));
+  }
+
+  @Test
+  void joinTest() {
+    board.setGenerator(gen);
+    gen.setConfig("complex_movement");
+    board.randomInicialize();
+    Block[][] b = board.getBoard();
+
+    // check if configuration has been applied correctly
+    assertEquals(2, b[1][1].getValue());
+    assertEquals(b[1][1].getColor(),InfoGame.Color.GREEN);
+    assertEquals(2, b[1][2].getValue());
+    assertEquals(b[1][2].getColor(),InfoGame.Color.GREEN);
+    assertEquals(4, b[2][2].getValue());
+    assertEquals(b[2][2].getColor(),InfoGame.Color.PINK);
+    assertEquals(8, b[2][1].getValue());
+    assertEquals(b[2][1].getColor(),InfoGame.Color.YELLOW);
+    assertEquals(16, b[0][1].getValue());
+    assertEquals(b[0][1].getColor(),InfoGame.Color.ORANGE);
+
+    board.join(1,1,'d');
+    assertEquals(0, b[1][1].getValue());
+    assertEquals(InfoGame.Color.NONE, b[1][1].getColor());
+    assertEquals(4, b[1][2].getValue());
+    assertEquals(InfoGame.Color.PINK, b[1][2].getColor());
+
+    board.join(1,2,'s');
+    assertEquals(0, b[1][2].getValue());
+    assertEquals(InfoGame.Color.NONE, b[1][2].getColor());
+    assertEquals(8, b[2][2].getValue());
+    assertEquals(InfoGame.Color.YELLOW, b[2][2].getColor());
+
+    board.join(2,2,'a');
+    assertEquals(0, b[2][2].getValue());
+    assertEquals(InfoGame.Color.NONE, b[2][2].getColor());
+    assertEquals(16, b[2][1].getValue());
+    assertEquals(InfoGame.Color.ORANGE, b[2][1].getColor());
+
+    board.moveBlock(2,1,'w');
+    board.join(1,1,'w');
+    assertEquals(0, b[1][1].getValue());
+    assertEquals(InfoGame.Color.NONE, b[1][1].getColor());
+    assertEquals(32, b[0][1].getValue());
+    assertEquals(InfoGame.Color.RED, b[0][1].getColor());
   }
 }
