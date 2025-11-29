@@ -40,18 +40,17 @@ public class Board {
   }
 
   public void randomInicialize() {
-    int x1, y1, x2, y2;
+    gen.randomInicialize(getBoard());
+  }
 
-    x1 = gen.genRandom();
-    y1 = gen.genRandom();
-
+  public void random() {
+    int x, y;
     do {
-      x2 = gen.genRandom();
-      y2 = gen.genRandom();
-    } while (x1 == x2 && y1 == y2);
+      x = gen.genRandom();
+      y = gen.genRandom();
+    } while (board[x][y].getValue() != 0);
 
-    board[x1][y1] = new Block(2, InfoGame.Color.GREEN);
-    board[x2][y2] = new Block(2, InfoGame.Color.GREEN);
+    board[x][y] = new Block(2, InfoGame.Color.GREEN);
   }
 
   public void setGenerator(Generator gen) {
@@ -110,6 +109,51 @@ public class Board {
           result = (0 == board[i + 1][j].getValue());
         }
         break;
+    }
+    return result;
+  }
+
+  public boolean join(int i, int j, char c) {
+    boolean result = false;
+    switch (c) {
+      case 'w':
+        if (i > 0) {
+          if (board[i][j].getValue() == board[i-1][j].getValue()) {
+            board[i-1][j].mix();
+            result = true;
+          }
+        }
+        break;
+
+      case 'a':
+        if (j > 0) {
+          if (board[i][j].getValue() == board[i][j - 1].getValue()) {
+            board[i][j-1].mix();
+            result = true;
+          }
+        }
+        break;
+
+      case 's':
+        if (i < SIZE - 1) {
+          if (board[i][j].getValue() == board[i+1][j].getValue()) {
+            board[i+1][j].mix();
+            result = true;
+          }
+        }
+        break;
+
+      case 'd':
+        if (j < SIZE - 1) {
+          if (board[i][j].getValue() == board[i][j + 1].getValue()) {
+            board[i][j+1].mix();
+            result = true;
+          }
+        }
+        break;
+    }
+    if (result) {
+      board[i][j].resetBlock();
     }
     return result;
   }
