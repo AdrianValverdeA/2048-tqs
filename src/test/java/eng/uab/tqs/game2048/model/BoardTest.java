@@ -198,4 +198,44 @@ class BoardTest {
     assertEquals(32, b[0][1].getValue());
     assertEquals(InfoGame.Color.RED, b[0][1].getColor());
   }
+
+  @Test
+  void moveTest(){
+    board.setGenerator(gen);
+    board.randomInicialize();
+    Block[][] b = board.getBoard();
+    board.moveBoard('w');
+    assertEquals(b[0][2].getValue(), 2);
+    assertEquals(b[1][2].getValue(), 2); //new block is generated
+    assertEquals(b[0][2].getColor(), InfoGame.Color.GREEN);
+    assertEquals(b[1][2].getColor(), InfoGame.Color.GREEN); //new block is generated
+    assertEquals(b[0][3].getValue(), 2);
+    assertEquals(b[3][3].getValue(), 0);
+    assertEquals(b[0][3].getColor(), InfoGame.Color.GREEN);
+    assertEquals(b[3][3].getColor(), InfoGame.Color.NONE);
+
+    board.moveBoard('a');
+    assertEquals(b[0][0].getValue(), 4);
+    assertEquals(b[0][0].getColor(), InfoGame.Color.PINK);
+    assertEquals(b[0][2].getColor(), InfoGame.Color.NONE);
+    assertEquals(b[0][2].getValue(), 0);
+    assertEquals(b[0][3].getValue(), 0);
+    assertEquals(b[0][3].getColor(), InfoGame.Color.NONE);
+
+    board = new Board();
+    board.setGenerator(gen);
+    board.randomInicialize();
+    b = board.getBoard();
+    board.moveBoard('s');
+    assertEquals(b[3][2].getValue(), 2);
+    assertEquals(b[3][2].getColor(), InfoGame.Color.GREEN);
+    assertEquals(b[3][3].getValue(), 2);
+    assertEquals(b[3][3].getColor(), InfoGame.Color.GREEN);
+
+    board.moveBoard('d');
+    assertEquals(b[3][3].getValue(), 4);
+    assertEquals(b[3][3].getColor(), InfoGame.Color.PINK);
+    assertEquals(b[3][2].getValue(), 0);
+    assertEquals(b[3][2].getColor(), InfoGame.Color.NONE);
+  }
 }

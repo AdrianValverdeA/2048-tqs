@@ -14,6 +14,8 @@ public class GeneratorMock extends Generator
 
   public GeneratorMock() {
     this.sequence = new int[]{1, 2, 3, 3};
+    this.values = new int[]{2, 2};
+    this.colors = new InfoGame.Color[]{InfoGame.Color.GREEN, InfoGame.Color.GREEN};
   }
 
   public int genRandom() {
