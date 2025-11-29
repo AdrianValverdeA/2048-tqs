@@ -157,4 +157,133 @@ public class Board {
     }
     return result;
   }
+
+  public void moveBoard(char c) {
+    int i = 0;
+    int j = 0;
+    int currentI = 0;
+    int currentJ = 0;
+    boolean done = false;
+    switch (c) {
+      case 'w':
+        i = 1;
+        j = 0;
+        while (i < SIZE)
+        {
+          while (j < SIZE)
+          {
+            if (board[i][j].getValue() == 0)
+            {
+              j++;
+              continue;
+            }
+            currentI = i;
+            currentJ = j;
+            while(canMove(currentI, currentJ, c))
+            {
+              int[] coords = moveBlock(currentI, currentJ, c);
+              currentI =  coords[0];
+              currentJ = coords[1];
+              done = true;
+            }
+            join(currentI,currentJ,c);
+            j++;
+          }
+          i++;
+          j = 0;
+        }
+        break;
+
+      case 'a':
+        i = 0;
+        j = 1;
+        while (j < SIZE)
+        {
+          while (i < SIZE)
+          {
+            if (board[i][j].getValue() == 0)
+            {
+              i++;
+              continue;
+            }
+            currentI = i;
+            currentJ = j;
+            while(canMove(currentI, currentJ, c))
+            {
+              int[] coords = moveBlock(currentI, currentJ, c);
+              currentI =  coords[0];
+              currentJ = coords[1];
+              done = true;
+            }
+            join(currentI,currentJ,c);
+            i++;
+          }
+          j++;
+          i = 0;
+        }
+        break;
+
+      case 's':
+        i = 2;
+        j = 0;
+        while (i >= 0)
+        {
+          while (j < SIZE)
+          {
+            if (board[i][j].getValue() == 0)
+            {
+              j++;
+              continue;
+            }
+            currentI = i;
+            currentJ = j;
+            while(canMove(currentI, currentJ, c))
+            {
+              int[] coords = moveBlock(currentI, currentJ, c);
+              currentI =  coords[0];
+              currentJ = coords[1];
+              done = true;
+            }
+            join(currentI,currentJ,c);
+            j++;
+          }
+          i--;
+          j = 0;
+        }
+        break;
+
+      case 'd':
+        i = 0;
+        j = 2;
+        while (j >= 0)
+        {
+          while (i < SIZE)
+          {
+            if (board[i][j].getValue() == 0)
+            {
+              i++;
+              continue;
+            }
+            currentI = i;
+            currentJ = j;
+            while(canMove(currentI, currentJ, c))
+            {
+              int[] coords = moveBlock(currentI, currentJ, c);
+              currentI =  coords[0];
+              currentJ = coords[1];
+              done = true;
+            }
+            join(currentI,currentJ,c);
+            i++;
+          }
+          j--;
+          i = 0;
+        }
+        break;
+    }
+    if (done)
+    {
+      random();
+    }
+  }
 }
