@@ -292,4 +292,19 @@ class BoardTest {
       }
     }
   }
+
+  @Test
+  void isGameWinnedTest() {
+    board.setGenerator(gen);
+    gen.setConfig("win");
+    board.randomInicialize();
+    board.moveBoard('d');
+    assertEquals(board.isGameWinned(), true);
+
+    board = new Board();
+    board.setGenerator(gen);
+    gen.setConfig("default");
+    board.randomInicialize();
+    assertEquals(board.isGameWinned(), false);
+  }
 }
