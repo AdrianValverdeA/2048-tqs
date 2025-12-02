@@ -4,6 +4,7 @@ import eng.uab.tqs.game2048.model.mock.GeneratorMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
@@ -270,5 +271,25 @@ class BoardTest {
     board.setGenerator(gen);
     board.randomInicialize();
     assertEquals(board.isGameOver(), false);
+  }
+
+  @Test
+  void boardCopyConstructorTest() {
+    board.setGenerator(gen);
+    board.randomInicialize();
+    Block[][] b = board.getBoard();
+    Board board2 =  new Board(board);
+
+    assertEquals(board.getScore(), board2.getScore());
+    assertEquals(board.getGenerator(), board2.getGenerator());
+
+    Block[][] b2 = board2.getBoard();
+    for (int i = 0; i < SIZE; i++)
+    {
+      for (int j = 0; j < SIZE; j++) {
+        assertEquals(b[i][j].getValue(), b2[i][j].getValue());
+        assertEquals(b[i][j].getColor(), b2[i][j].getColor());
+      }
+    }
   }
 }
