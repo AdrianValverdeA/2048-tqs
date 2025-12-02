@@ -9,6 +9,8 @@ public class Board {
   private Block[][] board;
   private int score;
   private Generator gen;
+  private Character[] movements = {'w','a','s','d'};
+  private boolean gameOver = false;
 
   public Board() {
     board = new Block[SIZE][SIZE];
@@ -20,6 +22,21 @@ public class Board {
       }
     }
 
+  }
+
+  public Board(Board other) {
+    this.board = new Block[SIZE][SIZE];
+    for (int i = 0; i < SIZE; i++) {
+      for (int j = 0; j < SIZE; j++) {
+        this.board[i][j] = new Block(
+            other.board[i][j].getValue(),
+            other.board[i][j].getColor()
+        );
+      }
+    }
+
+    this.score = other.getScore();
+    this.gen = other.gen;
   }
 
   public int getScore() {
@@ -57,6 +74,10 @@ public class Board {
     this.gen = gen;
   }
 
+  public Generator getGenerator()
+  {
+    return this.gen;
+  }
   public int[] moveBlock(int i, int j, char c) {
     int i2 = i;
     int j2 = j;
@@ -158,7 +179,7 @@ public class Board {
     return result;
   }
 
-  public void moveBoard(char c) {
+  public boolean moveBoard(char c) {
     int i = 0;
     int j = 0;
     int currentI = 0;
@@ -285,5 +306,26 @@ public class Board {
     {
       random();
     }
+    return done;
+  }
+
+  public boolean isGameOver() {
+    boolean movementDone = false;
+    int i = 0;
+    for (i = 0; i < SIZE; i++) {
+      for (int j = 0; j < SIZE; j++) {
+        if (board[i][j].getValue() == 0) {
+          return false;
+        }
+      }
+    }
+    i = 0;
+    while(!movementDone && i < movements.length) {
+      Board checkBoard = new Board(this);
+      movementDone = checkBoard.moveBoard(movements[i]);
+      i++;
+    }
+    gameOver = !movementDone;
+    return gameOver;
   }
 }
