@@ -238,4 +238,37 @@ class BoardTest {
     assertEquals(b[3][2].getValue(), 0);
     assertEquals(b[3][2].getColor(), InfoGame.Color.NONE);
   }
+
+  @Test
+  void gameOverTest(){
+    board.setGenerator(gen);
+    gen.setConfig("game_over");
+    board.randomInicialize();
+    assertEquals(board.isGameOver(), true);
+
+
+    Board board = new Board();
+    gen.setConfig("game_over_not_1");
+    board.setGenerator(gen);
+    board.randomInicialize();
+    assertEquals(board.isGameOver(), false);
+
+    board = new Board();
+    gen.setConfig("not_game_over");
+    board.setGenerator(gen);
+    board.randomInicialize();
+    assertEquals(board.isGameOver(), false);
+
+    board = new Board();
+    gen.setConfig("not_game_over_horizontal");
+    board.setGenerator(gen);
+    board.randomInicialize();
+    assertEquals(board.isGameOver(), false);
+
+    board = new Board();
+    gen.setConfig("not_game_over_vertical");
+    board.setGenerator(gen);
+    board.randomInicialize();
+    assertEquals(board.isGameOver(), false);
+  }
 }
