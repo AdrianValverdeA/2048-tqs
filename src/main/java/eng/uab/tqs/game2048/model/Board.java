@@ -11,6 +11,7 @@ public class Board {
   private Generator gen;
   private Character[] movements = {'w','a','s','d'};
   private boolean gameOver = false;
+  private boolean gameWinned = false;
 
   public Board() {
     board = new Block[SIZE][SIZE];
@@ -327,5 +328,17 @@ public class Board {
     }
     gameOver = !movementDone;
     return gameOver;
+  }
+
+  public boolean isGameWinned() {
+    for (int i = 0; i < SIZE; i++) {
+      for (int j = 0; j < SIZE; j++) {
+        if (board[i][j].getValue() == 2048) {
+          gameWinned = true;
+          return true;
+        }
+      }
+    }
+    return gameWinned;
   }
 }
