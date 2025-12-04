@@ -200,12 +200,14 @@ public class BoardMock extends Board {
 
   public boolean join(int i, int j, char c) {
     boolean result = false;
+    int scoreAdd = 0;
     switch (c) {
       case 'w':
         if (i > 0) {
           if (board[i][j].getValue() == board[i-1][j].getValue()) {
             board[i-1][j].mix();
             result = true;
+            scoreAdd += board[i-1][j].getValue();
           }
         }
         break;
@@ -215,6 +217,7 @@ public class BoardMock extends Board {
           if (board[i][j].getValue() == board[i][j - 1].getValue()) {
             board[i][j-1].mix();
             result = true;
+            scoreAdd += board[i][j-1].getValue();
           }
         }
         break;
@@ -224,6 +227,7 @@ public class BoardMock extends Board {
           if (board[i][j].getValue() == board[i+1][j].getValue()) {
             board[i+1][j].mix();
             result = true;
+            scoreAdd += board[i+1][j].getValue();
           }
         }
         break;
@@ -233,12 +237,14 @@ public class BoardMock extends Board {
           if (board[i][j].getValue() == board[i][j + 1].getValue()) {
             board[i][j+1].mix();
             result = true;
+            scoreAdd += board[i][j+1].getValue();
           }
         }
         break;
     }
     if (result) {
       board[i][j].resetBlock();
+      score += scoreAdd;
     }
     return result;
   }
