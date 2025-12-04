@@ -49,6 +49,90 @@ public class GeneratorMock extends Generator
         this.colors = new InfoGame.Color[]{InfoGame.Color.GREEN, InfoGame.Color.GREEN,  InfoGame.Color.PINK, InfoGame.Color.YELLOW, InfoGame.Color.ORANGE};
         this.values = new int[]{2, 2, 4, 8, 16};
         break;
+
+      case "game_over_not_1": // not 2,0
+        this.sequence = new int[]{0,0, 0,1, 0,2, 0,3, 1,0, 1,1, 1,2, 1,3, 2,1, 2,2, 2,3, 3,0, 3,1, 3,2, 3,3};
+        this.colors = new InfoGame.Color[]{InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN};
+        this.values = new int[]{2, 4, 2, 4, 4, 2, 4, 2, 4, 2, 4, 4, 2, 4, 2};
+        break;
+
+      case "not_game_over": // 2,1 equal to up, left,right, down
+        this.sequence = new int[]{0,0, 0,1, 0,2, 0,3, 1,0, 1,1, 1,2, 1,3, 2,0, 2,1, 2,2, 2,3, 3,0, 3,1, 3,2, 3,3};
+        this.colors = new InfoGame.Color[]{InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN,
+            InfoGame.Color.GREEN, InfoGame.Color.GREEN, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN};
+        this.values = new int[]{2, 4, 2, 4, 4, 2, 4, 2, 2, 2, 2, 4, 4, 2, 4, 2};
+        break;
+
+      case "not_game_over_horizontal": // 2,1 equal to 2,2
+        this.sequence = new int[]{0,0, 0,1, 0,2, 0,3, 1,0, 1,1, 1,2, 1,3, 2,0, 2,1, 2,2, 2,3, 3,0, 3,1, 3,2, 3,3};
+        this.colors = new InfoGame.Color[]{InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN,
+            InfoGame.Color.GREEN, InfoGame.Color.YELLOW, InfoGame.Color.YELLOW, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN};
+        this.values = new int[]{2, 4, 2, 4, 4, 2, 4, 2, 2, 8, 8, 4, 4, 2, 4, 2};
+        break;
+
+      case "not_game_over_vertical": // 2,1 equal to 3,1
+        this.sequence = new int[]{0,0, 0,1, 0,2, 0,3, 1,0, 1,1, 1,2, 1,3, 2,0, 2,1, 2,2, 2,3, 3,0, 3,1, 3,2, 3,3};
+        this.colors = new InfoGame.Color[]{InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN,
+            InfoGame.Color.GREEN, InfoGame.Color.YELLOW, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.YELLOW, InfoGame.Color.PINK, InfoGame.Color.GREEN};
+        this.values = new int[]{2, 4, 2, 4, 4, 2, 4, 2, 2, 8, 2, 4, 4, 8, 4, 2};
+        break;
+
+      case "game_over":
+        this.sequence = new int[]{0,0, 0,1, 0,2, 0,3, 1,0, 1,1, 1,2, 1,3, 2,0, 2,1, 2,2, 2,3, 3,0, 3,1, 3,2, 3,3};
+        this.colors = new InfoGame.Color[]{InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN,
+            InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN};
+        this.values = new int[]{2, 4, 2, 4, 4, 2, 4, 2, 2, 4, 2, 4, 4, 2, 4, 2};
+        break;
+
+      case "win":
+        this.sequence = new int[]{0,0, 0,1, 0,2, 0,3, 1,0, 1,1, 1,2, 1,3, 2,0, 2,1, 2,2, 2,3, 3,0, 3,1, 3,2, 3,3};
+        this.colors = new InfoGame.Color[]{InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN,
+            InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+            InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.NAVY, InfoGame.Color.NAVY};
+        this.values = new int[]{2, 4, 2, 4, 4, 2, 4, 2, 2, 4, 2, 4, 4, 2, 1024, 1024};
+        break;
+
+      case "game_match_lose":
+
+        this.sequence = new int[]{
+            0, 0, 3, 1, 3, 2, 0, 3
+        };
+
+        this.values = new int[]{
+            2, 2, 2, 2
+        };
+
+        this.colors = new InfoGame.Color[]{
+            InfoGame.Color.GREEN, InfoGame.Color.GREEN, InfoGame.Color.GREEN, InfoGame.Color.GREEN
+        };
+        break;
+
+      case "game_match_win":
+
+        this.sequence = new int[]{
+            0,0
+        };
+
+        this.values = new int[]{
+            2
+        };
+
+        this.colors = new InfoGame.Color[]{
+            InfoGame.Color.GREEN
+        };
+        break;
     }
   }
 }

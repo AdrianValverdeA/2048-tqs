@@ -4,6 +4,7 @@ import eng.uab.tqs.game2048.model.mock.GeneratorMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
@@ -237,5 +238,73 @@ class BoardTest {
     assertEquals(b[3][3].getColor(), InfoGame.Color.PINK);
     assertEquals(b[3][2].getValue(), 0);
     assertEquals(b[3][2].getColor(), InfoGame.Color.NONE);
+  }
+
+  @Test
+  void gameOverTest(){
+    board.setGenerator(gen);
+    gen.setConfig("game_over");
+    board.randomInicialize();
+    assertEquals(board.isGameOver(), true);
+
+
+    Board board = new Board();
+    gen.setConfig("game_over_not_1");
+    board.setGenerator(gen);
+    board.randomInicialize();
+    assertEquals(board.isGameOver(), false);
+
+    board = new Board();
+    gen.setConfig("not_game_over");
+    board.setGenerator(gen);
+    board.randomInicialize();
+    assertEquals(board.isGameOver(), false);
+
+    board = new Board();
+    gen.setConfig("not_game_over_horizontal");
+    board.setGenerator(gen);
+    board.randomInicialize();
+    assertEquals(board.isGameOver(), false);
+
+    board = new Board();
+    gen.setConfig("not_game_over_vertical");
+    board.setGenerator(gen);
+    board.randomInicialize();
+    assertEquals(board.isGameOver(), false);
+  }
+
+  @Test
+  void boardCopyConstructorTest() {
+    board.setGenerator(gen);
+    board.randomInicialize();
+    Block[][] b = board.getBoard();
+    Board board2 =  new Board(board);
+
+    assertEquals(board.getScore(), board2.getScore());
+    assertEquals(board.getGenerator(), board2.getGenerator());
+
+    Block[][] b2 = board2.getBoard();
+    for (int i = 0; i < SIZE; i++)
+    {
+      for (int j = 0; j < SIZE; j++) {
+        assertEquals(b[i][j].getValue(), b2[i][j].getValue());
+        assertEquals(b[i][j].getColor(), b2[i][j].getColor());
+      }
+    }
+  }
+
+  @Test
+  void isGameWinnedTest() {
+    board.setGenerator(gen);
+    gen.setConfig("win");
+    board.randomInicialize();
+    board.moveBoard('d');
+    assertEquals(board.isGameWinned(), true);
+
+    board = new Board();
+    board.setGenerator(gen);
+    gen.setConfig("default");
+    board.randomInicialize();
+    assertEquals(board.isGameWinned(), false);
   }
 }

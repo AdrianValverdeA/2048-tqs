@@ -1,75 +1,138 @@
-package eng.uab.tqs.game2048.model;
+package eng.uab.tqs.game2048.model.mock;
+
+import eng.uab.tqs.game2048.model.*;
+
+import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
 import java.util.ArrayList;
 import java.util.Random;
 
 import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
+public class BoardMock extends Board {
+    private Block[][] board;
+    private int score;
+    private Generator gen;
+    private Character[] movements = {'w','a','s','d'};
+    private boolean gameOver = false;
+    private boolean gameWinned = false;
+    private boolean simulated;
 
-public class Board {
+    public BoardMock() {
+      this.board = new Block[SIZE][SIZE];
+      this.score = 0;
+      this.gen = new Generator();
+      for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+          this.board[i][j] = new Block(0, InfoGame.Color.NONE);
+        }
+      }
+      this.simulated = false;
+    }
 
-  private Block[][] board;
-  private int score;
-  private Generator gen;
-  private Character[] movements = {'w','a','s','d'};
-  private boolean gameOver = false;
-  private boolean gameWinned = false;
+    public BoardMock(BoardMock other) {
+      this.board = new Block[SIZE][SIZE];
+      Block[][] b2 = other.getBoard();
+      for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+          this.board[i][j] = new Block(
+              b2[i][j].getValue(),
+              b2[i][j].getColor()
+          );
+        }
+      }
 
-  public Board() {
-    board = new Block[SIZE][SIZE];
-    score = 0;
-    gen = new Generator();
-    for (int i = 0; i < SIZE; i++) {
-      for (int j = 0; j < SIZE; j++) {
-        board[i][j] = new Block(0, InfoGame.Color.NONE);
+      this.simulated = true;
+      this.score = other.getScore();
+      this.gen = other.getGenerator();
+    }
+
+    public Block[][] getBoard() {
+      return board;
+    }
+
+    public void drawBoard() {
+      for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+          System.out.print(board[i][j].getValue());
+        }
+        System.out.println("");
       }
     }
 
-  }
+    public void randomInicialize() {
+    return;
+    }
 
-  public Board(Board other) {
-    this.board = new Block[SIZE][SIZE];
-    for (int i = 0; i < SIZE; i++) {
-      for (int j = 0; j < SIZE; j++) {
-        this.board[i][j] = new Block(
-            other.board[i][j].getValue(),
-            other.board[i][j].getColor()
-        );
+    public void setConfig(String config) {
+      int[] sequence;
+      int[] values;
+      InfoGame.Color[] colors;
+      switch (config) {
+        case "loose":
+          sequence = new int[]{
+              0, 0, 0, 1,
+              1, 0, 1, 1, 1, 2, 1, 3,
+              2, 0, 2, 1, 2, 2, 2, 3,
+              3, 0, 3, 1, 3, 2, 3, 3
+          };
+
+          values = new int[]{
+              2, 32,
+              2, 8, 2, 8,
+              32, 128, 64, 32,
+              8, 2, 16, 4
+          };
+          colors = new InfoGame.Color[]{
+              InfoGame.Color.GREEN, InfoGame.Color.ORANGE,
+              InfoGame.Color.GREEN, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+              InfoGame.Color.ORANGE, InfoGame.Color.RED, InfoGame.Color.BLUE, InfoGame.Color.ORANGE,
+              InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.YELLOW, InfoGame.Color.PINK
+          };
+
+          for (int i = 0; i < sequence.length; i+=2) {
+            board[sequence[i]][sequence[i+1]] = new Block(values[i/2], colors[i/2]);
+          }
+          break;
+
+        default:
+          sequence = new int[]{
+              0, 0, 0, 1, 0, 2, 0, 3,
+              1, 0, 1, 1, 1, 2, 1, 3,
+              2, 0, 2, 1, 2, 2, 2, 3,
+              3, 0, 3, 1, 3, 2, 3, 3
+          };
+
+          values = new int[]{
+              2, 32, 1024, 1024,
+              512, 8, 2, 8,
+              32, 128, 64, 32,
+              8, 2, 16, 4
+          };
+
+          colors = new InfoGame.Color[]{
+              InfoGame.Color.GREEN, InfoGame.Color.ORANGE, InfoGame.Color.NAVY, InfoGame.Color.NAVY,
+              InfoGame.Color.GREY, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
+              InfoGame.Color.ORANGE, InfoGame.Color.RED, InfoGame.Color.BLUE, InfoGame.Color.ORANGE,
+              InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.YELLOW, InfoGame.Color.PINK
+          };
+
+          for (int i = 0; i < sequence.length; i+=2) {
+            board[sequence[i]][sequence[i+1]] = new Block(values[i/2], colors[i/2]);
+          }
+          break;
       }
     }
 
-    this.score = other.getScore();
-    this.gen = other.gen;
-  }
+    public void random() {
+      if (!simulated) {
+        int x, y;
+        do {
+          x = gen.genRandom();
+          y = gen.genRandom();
+        } while (board[x][y].getValue() != 0);
 
-  public int getScore() {
-    return score;
-  }
-
-  public Block[][] getBoard() {
-    return board;
-  }
-
-  public void drawBoard() {
-    for (int i = 0; i < SIZE; i++) {
-      for (int j = 0; j < SIZE; j++) {
-        System.out.print(board[i][j].getValue());
+        board[x][y] = new Block(2, InfoGame.Color.GREEN);
       }
-      System.out.println("");
     }
-  }
-
-  public void randomInicialize() {
-    gen.randomInicialize(getBoard());
-  }
-
-  public void random() {
-    int x, y;
-    do {
-      x = gen.genRandom();
-      y = gen.genRandom();
-    } while (board[x][y].getValue() != 0);
-
-    board[x][y] = new Block(2, InfoGame.Color.GREEN);
-  }
 
   public void setGenerator(Generator gen) {
     this.gen = gen;
@@ -186,6 +249,7 @@ public class Board {
     int currentI = 0;
     int currentJ = 0;
     boolean done = false;
+    boolean joined = false;
     switch (c) {
       case 'w':
         i = 1;
@@ -208,7 +272,10 @@ public class Board {
               currentJ = coords[1];
               done = true;
             }
-            join(currentI,currentJ,c);
+            joined = join(currentI,currentJ,c);
+            if (joined) {
+              done = true;
+            }
             j++;
           }
           i++;
@@ -237,7 +304,10 @@ public class Board {
               currentJ = coords[1];
               done = true;
             }
-            join(currentI,currentJ,c);
+            joined = join(currentI,currentJ,c);
+            if (joined) {
+              done = true;
+            }
             i++;
           }
           j++;
@@ -266,7 +336,10 @@ public class Board {
               currentJ = coords[1];
               done = true;
             }
-            join(currentI,currentJ,c);
+            joined = join(currentI,currentJ,c);
+            if (joined) {
+              done = true;
+            }
             j++;
           }
           i--;
@@ -295,7 +368,10 @@ public class Board {
               currentJ = coords[1];
               done = true;
             }
-            join(currentI,currentJ,c);
+            joined = join(currentI,currentJ,c);
+            if (joined) {
+              done = true;
+            }
             i++;
           }
           j--;
@@ -322,7 +398,7 @@ public class Board {
     }
     i = 0;
     while(!movementDone && i < movements.length) {
-      Board checkBoard = new Board(this);
+      BoardMock checkBoard = new BoardMock(this);
       movementDone = checkBoard.moveBoard(movements[i]);
       i++;
     }
@@ -341,4 +417,5 @@ public class Board {
     }
     return gameWinned;
   }
+
 }
