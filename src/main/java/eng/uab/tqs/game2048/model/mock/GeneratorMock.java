@@ -103,6 +103,36 @@ public class GeneratorMock extends Generator
             InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.NAVY, InfoGame.Color.NAVY};
         this.values = new int[]{2, 4, 2, 4, 4, 2, 4, 2, 2, 4, 2, 4, 4, 2, 1024, 1024};
         break;
+
+      case "game_match_lose":
+
+        this.sequence = new int[]{
+            0, 0, 3, 1, 3, 2, 0, 3
+        };
+
+        this.values = new int[]{
+            2, 2, 2, 2
+        };
+
+        this.colors = new InfoGame.Color[]{
+            InfoGame.Color.GREEN, InfoGame.Color.GREEN, InfoGame.Color.GREEN, InfoGame.Color.GREEN
+        };
+        break;
+
+      case "game_match_win":
+
+        this.sequence = new int[]{
+            0,0
+        };
+
+        this.values = new int[]{
+            2
+        };
+
+        this.colors = new InfoGame.Color[]{
+            InfoGame.Color.GREEN
+        };
+        break;
     }
   }
 }
