@@ -186,6 +186,7 @@ public class Board {
     int currentI = 0;
     int currentJ = 0;
     boolean done = false;
+    boolean joined = false;
     switch (c) {
       case 'w':
         i = 1;
@@ -208,7 +209,10 @@ public class Board {
               currentJ = coords[1];
               done = true;
             }
-            join(currentI,currentJ,c);
+            joined = join(currentI,currentJ,c);
+            if (joined) {
+              done = true;
+            }
             j++;
           }
           i++;
@@ -237,7 +241,10 @@ public class Board {
               currentJ = coords[1];
               done = true;
             }
-            join(currentI,currentJ,c);
+            joined = join(currentI,currentJ,c);
+            if (joined) {
+              done = true;
+            }
             i++;
           }
           j++;
@@ -266,7 +273,10 @@ public class Board {
               currentJ = coords[1];
               done = true;
             }
-            join(currentI,currentJ,c);
+            joined = join(currentI,currentJ,c);
+            if (joined) {
+              done = true;
+            }
             j++;
           }
           i--;
@@ -295,7 +305,10 @@ public class Board {
               currentJ = coords[1];
               done = true;
             }
-            join(currentI,currentJ,c);
+            joined = join(currentI,currentJ,c);
+            if (joined) {
+              done = true;
+            }
             i++;
           }
           j--;
@@ -309,6 +322,7 @@ public class Board {
     }
     return done;
   }
+
 
   public boolean isGameOver() {
     boolean movementDone = false;
