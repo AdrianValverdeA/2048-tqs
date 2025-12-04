@@ -307,4 +307,18 @@ class BoardTest {
     board.randomInicialize();
     assertEquals(board.isGameWinned(), false);
   }
+
+    @Test
+    void scoreTest() {
+        board.setGenerator(gen);
+        board.randomInicialize();
+        assertEquals(board.getScore(), 0);
+        board.moveBoard('s');
+        board.moveBoard('d');
+        assertEquals(board.getScore(), 4);
+        board.moveBoard('d');
+        assertEquals(board.getScore(), 8);
+        board.moveBoard('s');
+        assertEquals(board.getScore(), 16);
+    }
 }
