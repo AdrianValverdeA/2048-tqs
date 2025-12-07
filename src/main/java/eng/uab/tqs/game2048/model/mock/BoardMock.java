@@ -425,4 +425,7 @@ public class BoardMock extends Board {
     return gameWinned;
   }
 
+  public void setScore(int score) {
+      this.score = score;
+  }
 }
