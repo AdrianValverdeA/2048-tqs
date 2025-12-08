@@ -8,6 +8,10 @@ public class GameMatch {
   char moveChar;
 
   public void startGame() {
+    if (board.getRestart()) {
+      System.out.println("GAME IS RESTARTING");
+      board = new Board();
+    }
     if (board.getGenerator() == null) {
       board.setGenerator(new Generator());
     }
@@ -22,6 +26,7 @@ public class GameMatch {
       board.moveBoard(moveChar);
       board.drawBoard();
     }
+    board.setRestart(true);
     if (board.isGameOver()) {
       System.out.println("Game Over!");
     }
@@ -40,5 +45,13 @@ public class GameMatch {
 
   public Board getBoard() {
     return board;
+  }
+
+  public void startGameFX() {
+    if (board.getGenerator() == null) {
+      board.setGenerator(new Generator());
+    }
+    board.randomInicialize();
+    board.setRestart(true);
   }
 }

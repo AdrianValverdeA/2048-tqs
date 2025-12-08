@@ -74,32 +74,39 @@ public class Game {
       }
 
       System.out.println("\nPress Enter to return to menu...");
-      scanner.nextLine();
+      //scanner.nextLine();
 
     } catch (IOException e) {
       System.out.println("Error reading scores file: " + e.getMessage());
     }
   }
 
+  public void showScoresFX() {
+    scores = new ArrayList<>();
+    try {
+      if (!fileManager.exists(scoreFile) || fileManager.size(scoreFile) == 0) {
+        return;
+      }
+      scores = fileManager.readAll(scoreFile);
+    } catch (IOException e) {
+    }
+  }
+
   public void playGame()
   {
     gameMatch.startGame();
-    saveScore();
+    saveScore("a");
+  }
+  public void playGameFX()
+  {
+    gameMatch.startGameFX();
   }
 
-  public void saveScore() {
-    String playerName = "";
-    Board board = gameMatch.getBoard();
-
-    while (playerName.isEmpty()) {
-      System.out.print("Introduce your name to save your score: ");
-
-      playerName = scanner.scanName();
-
-      if (playerName.isEmpty()) {
-        System.out.println("Name can not be empty!.");
-      }
+  public void saveScore(String playerName) {
+    if (playerName == null || playerName.isEmpty()) {
+      playerName = "Anonymous";
     }
+    Board board = gameMatch.getBoard();
     try {
       scores = new ArrayList<>();
       if (fileManager.exists(scoreFile)) {
@@ -130,9 +137,16 @@ public class Game {
     this.scanner = scanner;
   }
 
-  public GameMatch getGameMatch() { return gameMatch;}
+  public GameMatch getGameMatch() {
+    return gameMatch;
+  }
 
-  public List<String> getScores() { return scores;}
+  public List<String> getScores() {
+    showScoresFX();
+    return scores;
+  }
 
-  public boolean getExit() {return exit;}
+  public boolean getExit() {
+    return exit;
+  }
 }
