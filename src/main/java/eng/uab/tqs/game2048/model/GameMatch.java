@@ -7,7 +7,14 @@ public class GameMatch {
   ScannerMovement scanner = new ScannerMovement();
   char moveChar;
 
+  private boolean invariant() {
+    if (board == null) return false;
+    if (scanner == null) return false;
+    return true;
+  }
+
   public void startGame() {
+    assert(invariant());
     if (board.getRestart()) {
       System.out.println("GAME IS RESTARTING");
       board = new Board();
@@ -33,21 +40,31 @@ public class GameMatch {
     else {
       System.out.println("GG WIN!");
     }
+    assert(invariant());
+    assert board.getRestart();
+    assert board.isGameOver() || board.isGameWinned();
   }
 
   public void setScanner(ScannerMovement scanner) {
+    assert(scanner != null);
     this.scanner = scanner;
+    assert(invariant());
+    assert (this.scanner == scanner);
   }
 
   public void setBoard(Board board) {
+    assert(board != null);
     this.board = board;
+    assert (this.board == board);
   }
 
   public Board getBoard() {
+    assert(invariant());
     return board;
   }
 
   public void startGameFX() {
+    assert(invariant());
     if (board.getRestart()) {
       board = new Board();
     }
@@ -56,5 +73,7 @@ public class GameMatch {
     }
     board.randomInicialize();
     board.setRestart(true);
+    assert board.getRestart();
+    assert(invariant());
   }
 }
