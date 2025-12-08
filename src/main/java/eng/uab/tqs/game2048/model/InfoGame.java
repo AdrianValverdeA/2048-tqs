@@ -21,7 +21,13 @@ public class InfoGame {
     private final int value;
 
     Color(int value) {
+      //precondition
+      assert(value >= 0 && value <= 11);
+
       this.value = value;
+
+      //postcondition
+      assert (value == this.value && this.value >= 0 && this.value <= 11);
     }
 
     public int getValue() {
