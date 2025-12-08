@@ -153,6 +153,25 @@ class BoardTest {
     b[0][0] = new Block(2, InfoGame.Color.GREEN);
     assertFalse(board.canMove(0,0,'w'));
     assertFalse(board.canMove(0,0,'a'));
+
+    //pairwise
+    assertFalse(board.canMove(0,0,'w'));
+    assertFalse(board.canMove(0,1,'a'));
+    assertFalse(board.canMove(0,2,'s'));
+    assertFalse(board.canMove(0,3,'d'));
+    assertTrue(board.canMove(1,1,'s'));
+    assertTrue(board.canMove(1,2,'d'));
+    assertTrue(board.canMove(1,3,'w'));
+    assertFalse(board.canMove(1,0,'a'));
+    assertFalse(board.canMove(2,2,'w'));
+    assertTrue(board.canMove(2,3,'a'));
+    assertTrue(board.canMove(2,0,'s'));
+    assertTrue(board.canMove(2,1,'d'));
+    assertFalse(board.canMove(3,3,'s'));
+    assertTrue(board.canMove(3,0,'d'));
+    assertTrue(board.canMove(3,1,'w'));
+    assertTrue(board.canMove(3,2,'a'));
+
   }
 
   @Test
