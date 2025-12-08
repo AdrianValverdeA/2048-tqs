@@ -12,6 +12,7 @@ public class Board {
   private Character[] movements = {'w','a','s','d'};
   private boolean gameOver = false;
   private boolean gameWinned = false;
+  private boolean restart;
 
   public Board() {
     board = new Block[SIZE][SIZE];
@@ -22,7 +23,7 @@ public class Board {
         board[i][j] = new Block(0, InfoGame.Color.NONE);
       }
     }
-
+    restart = false;
   }
 
   public Board(Board other) {
@@ -360,5 +361,13 @@ public class Board {
       }
     }
     return gameWinned;
+  }
+
+  public void setRestart(boolean restart) {
+    this.restart = restart;
+  }
+
+  public boolean getRestart() {
+    return restart;
   }
 }

@@ -48,6 +48,9 @@ public class GameMatch {
   }
 
   public void startGameFX() {
+    if (board.getRestart()) {
+      board = new Board();
+    }
     if (board.getGenerator() == null) {
       board.setGenerator(new Generator());
     }
