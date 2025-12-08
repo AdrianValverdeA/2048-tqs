@@ -70,6 +70,7 @@ class BlockTest {
     assertThrows(AssertionError.class, () -> new Block(-5, InfoGame.Color.RED));
     assertThrows(AssertionError.class, () -> new Block(2049, InfoGame.Color.RED));
     assertThrows(AssertionError.class, () -> new Block(3000, InfoGame.Color.RED));
+    assertThrows(AssertionError.class, () -> new Block(3000, InfoGame.Color.NONE));
   }
 
   @Test
