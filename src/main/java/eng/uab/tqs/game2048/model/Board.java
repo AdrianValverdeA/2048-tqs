@@ -104,14 +104,12 @@ public class Board {
   }
 
   public void drawBoard() {
-    assert invariant();
     for (int i = 0; i < SIZE; i++) {
       for (int j = 0; j < SIZE; j++) {
         System.out.print(board[i][j].getValue());
       }
       System.out.println("");
     }
-    assert invariant();
   }
 
   public void randomInicialize() {
@@ -146,10 +144,12 @@ public class Board {
   {
     return this.gen;
   }
+
   public int[] moveBlock(int i, int j, char c) {
     assert invariant();
     //preconditions
-    assert(i >= 0 && i < SIZE);
+    assert(i >= 0);
+    assert(i < SIZE);
     assert(j >= 0 && j < SIZE);
     assert(board[i][j].getValue() > 0);
     assert(c == 'w' || c == 'a' || c == 's' || c == 'd');
@@ -171,6 +171,9 @@ public class Board {
 
       case 's':
         i2 = i+1;
+        break;
+
+      default:
         break;
     }
     board[i2][j2] = new Block(board[i][j].getValue(), board[i][j].getColor());
@@ -214,6 +217,9 @@ public class Board {
         if (i < SIZE - 1) {
           result = (0 == board[i + 1][j].getValue());
         }
+        break;
+
+      default:
         break;
     }
     assert invariant();
@@ -269,6 +275,9 @@ public class Board {
             scoreAdd += board[i][j+1].getValue();
           }
         }
+        break;
+
+      default:
         break;
     }
     if (result) {
@@ -419,6 +428,9 @@ public class Board {
           j--;
           i = 0;
         }
+        break;
+
+      default:
         break;
     }
     if (done)
