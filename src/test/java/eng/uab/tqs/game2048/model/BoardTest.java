@@ -3,7 +3,6 @@ package eng.uab.tqs.game2048.model;
 import eng.uab.tqs.game2048.model.mock.GeneratorMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -445,4 +444,21 @@ class BoardTest {
       assertTrue(result || !result);
 
     }
+
+
+  @Test
+  void moveBoard_dataDriven() throws Exception {
+    List<String> lines = Files.readAllLines(
+        Path.of("src/test/java/eng/uab/tqs/game2048/model/datadriven/board.csv"));
+
+    for (String line : lines) {
+      char dir = line.trim().charAt(0);
+
+      Board board = new Board();
+      board.setGenerator(gen);
+      board.randomInicialize();
+      assertDoesNotThrow(() -> board.moveBoard(dir));
+    }
+  }
+
 }
