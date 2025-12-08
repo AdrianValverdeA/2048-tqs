@@ -34,6 +34,22 @@ public class FileManagerMock extends FileManager {
         storedLines = List.of("TestUser:2000","Alice:1500", "Bob:900");
         break;
 
+      case "two":
+        exists = true;
+        storedLines = List.of("TestUser:2000","Alice:1500");
+        break;
+
+      case "some":
+        exists = true;
+        storedLines = List.of("TestUser:2000","Alice:1500", "Peter:800", "Max:400");
+        break;
+
+      case "ten":
+        exists = true;
+        storedLines = List.of("TestUser:2000","Alice:1500", "Peter:800", "Max:400", "Alfred:915"
+                            ,"Juanjo:700", "Carlos:2100","Marc:2888","Ludmila:700", "Carmen:350");
+        break;
+
       default:
         throw new IllegalArgumentException("Unknown config: " + config);
     }
