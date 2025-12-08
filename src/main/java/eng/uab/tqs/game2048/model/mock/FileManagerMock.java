@@ -9,7 +9,7 @@ public class FileManagerMock extends FileManager {
 
   private boolean exists = false;
   private List<String> storedLines = new ArrayList<>();
-
+  private boolean pretendNonEmpty = false;
   public void setConfig(String config) {
 
     switch (config) {
@@ -50,6 +50,18 @@ public class FileManagerMock extends FileManager {
                             ,"Juanjo:700", "Carlos:2100","Marc:2888","Ludmila:700", "Carmen:350");
         break;
 
+      case "INVALID_FILE":
+        exists = true;
+        pretendNonEmpty = true;
+        storedLines = new ArrayList<>();
+        break;
+
+      case "ERROR_FILE":
+        exists = true;
+        storedLines = new ArrayList<>();
+        pretendNonEmpty = true;
+        break;
+
       default:
         throw new IllegalArgumentException("Unknown config: " + config);
     }
@@ -62,11 +74,15 @@ public class FileManagerMock extends FileManager {
 
   @Override
   public long size(String path) {
+    if (pretendNonEmpty) return 10;
     return storedLines.isEmpty() ? 0 : 1;
   }
 
   @Override
   public List<String> readAll(String path) throws IOException {
+    if (pretendNonEmpty && storedLines.isEmpty()) {
+      throw new IOException("Simulated file read error");
+    }
     return new ArrayList<>(storedLines);
   }
 
