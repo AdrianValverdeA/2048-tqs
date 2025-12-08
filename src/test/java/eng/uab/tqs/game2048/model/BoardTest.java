@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+
 class BoardTest {
   Board board;
   GeneratorMock gen;
@@ -25,6 +29,7 @@ class BoardTest {
         assertEquals(InfoGame.Color.NONE, block.getColor());
       }
     }
+    board.drawBoard();
     assertEquals(board.getScore(),0);
   }
 
@@ -240,6 +245,7 @@ class BoardTest {
     assertEquals(32, b2[2][1].getValue());
     assertEquals(InfoGame.Color.RED, b2[2][1].getColor());
     assertEquals(0, board.getScore());
+    assertThrows(AssertionError.class, () -> board.canMove(2,1,'f'));
   }
 
   @Test
