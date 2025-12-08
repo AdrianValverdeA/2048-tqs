@@ -142,6 +142,15 @@ class BoardTest {
     assertThrows(AssertionError.class, () -> board.moveBlock(0,0,'x'));
     b[0][0] = null;
     assertThrows(AssertionError.class, () -> board.moveBlock(0,0,'s'));
+    assertThrows(AssertionError.class, () -> board.moveBlock(-1,-1,'w'));
+    assertThrows(AssertionError.class, () -> board.moveBlock(5,5,'w'));
+    assertThrows(AssertionError.class, () -> board.moveBlock(4,4,'w'));
+    assertThrows(AssertionError.class, () -> board.moveBlock(10,0,'w'));
+    assertThrows(AssertionError.class, () -> board.moveBlock(-10,-10,'w'));
+    assertThrows(AssertionError.class, () -> board.moveBlock(-10,-10,'f'));
+    assertThrows(AssertionError.class, () -> board.moveBlock(SIZE, 0, 'w'));
+    assertThrows(AssertionError.class, () -> board.moveBlock(0, SIZE, 'a'));
+
   }
 
   @Test
