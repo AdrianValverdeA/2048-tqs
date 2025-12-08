@@ -46,4 +46,9 @@ class InfoGameTest {
     color = InfoGame.Color.BLACK;
     assertEquals(11,color.getValue());
   }
+
+  @Test
+  void testCICD() {
+    fail("fail");
+  }
 }
