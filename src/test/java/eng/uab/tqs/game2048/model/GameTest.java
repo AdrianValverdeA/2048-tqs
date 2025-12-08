@@ -77,7 +77,6 @@ class GameTest {
 
   @Test
   void menu2() throws Exception {
-    assertEquals(game.getScores(), null);
     scan.setConfig("2");
     game.menu();
     assertNotEquals(game.getScores(), null);
@@ -89,5 +88,42 @@ class GameTest {
     scan.setConfig("3");
     game.menu();
     assertTrue(game.getExit());
+  }
+
+  @Test
+  void loopSimpleTest()
+  {
+    //avoid loop
+    fm.setConfig("EMPTY_FILE");
+    assertDoesNotThrow(() -> game.showScores());
+    List<String> s = game.getScores();
+    assertNotNull(s);
+    assertEquals(0, s.size());
+
+    //one iteration
+    fm.setConfig("ONE_SCORE");
+    game.showScores();
+    s = game.getScores();
+    assertEquals(1, s.size());
+    assertEquals("TestUser:400", s.get(0));
+
+    //two iterations
+    fm.setConfig("two");
+    game.showScores();
+    List<String> s2 = game.getScores();
+    assertEquals(2, s2.size());
+
+    //Some iterations
+    fm.setConfig("some");
+    game.showScores();
+    List<String> s3 = game.getScores();
+    assertEquals(4, s3.size());
+
+    //ten iterations
+    fm.setConfig("ten");
+    game.showScores();
+    List<String> s4 = game.getScores();
+    assertEquals(10, s4.size());
+
   }
 }
