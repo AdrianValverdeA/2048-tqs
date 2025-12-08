@@ -49,6 +49,6 @@ class InfoGameTest {
 
   @Test
   void testCICD() {
-    assertTrue(true);
+    fail("fail");
   }
 }
