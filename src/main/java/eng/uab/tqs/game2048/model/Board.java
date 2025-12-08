@@ -14,6 +14,34 @@ public class Board {
   private boolean gameWinned = false;
   private boolean restart;
 
+  private boolean invariant() {
+    if (board == null || board.length != SIZE) return false;
+
+    for (int i = 0; i < SIZE; i++) {
+      if (board[i] == null || board[i].length != SIZE) return false;
+
+      for (int j = 0; j < SIZE; j++) {
+        Block block = board[i][j];
+        if (block == null) return false;
+
+        int value = block.getValue();
+        InfoGame.Color color = block.getColor();
+
+        if (value < 0 || value > 2048) return false;
+        if ((value == 0 && color != InfoGame.Color.NONE) ||
+            (value > 0 && color == InfoGame.Color.NONE)) return false;
+      }
+    }
+
+    if (score < 0) return false;
+    if (gen == null) return false;
+    if (!(gameOver == true || gameOver == false)) return false;
+    if (!(gameWinned == true || gameWinned == false)) return false;
+    if (!(restart == true || restart == false)) return false;
+    if (board.length != SIZE || board[0].length != SIZE) return false;
+    return true;
+  }
+
   public Board() {
     board = new Block[SIZE][SIZE];
     score = 0;
@@ -24,9 +52,22 @@ public class Board {
       }
     }
     restart = false;
+
+    //postconditions
+    for (int i = 0; i < SIZE; i++) {
+      for (int j = 0; j < SIZE; j++) {
+        assert board[i][j].getValue() == 0;
+        assert board[i][j].getColor() == InfoGame.Color.NONE;
+      }
+    }
+    assert score == 0;
+    assert gen != null;
+    assert !restart;
+    assert invariant();
   }
 
   public Board(Board other) {
+    assert other != null;
     this.board = new Block[SIZE][SIZE];
     for (int i = 0; i < SIZE; i++) {
       for (int j = 0; j < SIZE; j++) {
@@ -39,6 +80,19 @@ public class Board {
 
     this.score = other.getScore();
     this.gen = other.gen;
+
+    //postconditions
+    for (int i = 0; i < SIZE; i++) {
+      for (int j = 0; j < SIZE; j++) {
+        assert this.board[i][j].getValue() == other.board[i][j].getValue();
+        assert this.board[i][j].getColor() == other.board[i][j].getColor();
+      }
+    }
+
+    assert this.score == other.getScore();
+    assert(this.board != other.board);
+    assert this.gen == other.gen;
+    assert invariant();
   }
 
   public int getScore() {
@@ -50,19 +104,24 @@ public class Board {
   }
 
   public void drawBoard() {
+    assert invariant();
     for (int i = 0; i < SIZE; i++) {
       for (int j = 0; j < SIZE; j++) {
         System.out.print(board[i][j].getValue());
       }
       System.out.println("");
     }
+    assert invariant();
   }
 
   public void randomInicialize() {
+    assert invariant();
     gen.randomInicialize(getBoard());
+    assert invariant();
   }
 
   public void random() {
+    assert invariant();
     int x, y;
     do {
       x = gen.genRandom();
@@ -70,6 +129,13 @@ public class Board {
     } while (board[x][y].getValue() != 0);
 
     board[x][y] = new Block(2, InfoGame.Color.GREEN);
+
+    //postconditions
+    assert(x >= 0 && y >= 0);
+    assert(x <= 3 && y <= 3);
+    assert(board[x][y].getValue() == 2);
+    assert(board[x][y].getColor() == InfoGame.Color.GREEN);
+    assert invariant();
   }
 
   public void setGenerator(Generator gen) {
@@ -81,6 +147,13 @@ public class Board {
     return this.gen;
   }
   public int[] moveBlock(int i, int j, char c) {
+    assert invariant();
+    //preconditions
+    assert(i >= 0 && i < SIZE);
+    assert(j >= 0 && j < SIZE);
+    assert(board[i][j].getValue() > 0);
+    assert(c == 'w' || c == 'a' || c == 's' || c == 'd');
+
     int i2 = i;
     int j2 = j;
     switch (c) {
@@ -103,10 +176,20 @@ public class Board {
     board[i2][j2] = new Block(board[i][j].getValue(), board[i][j].getColor());
     board[i][j].resetBlock();
     int[] coords = {i2,j2};
+    assert invariant();
+    assert(board[i][j].getValue() == 0);
+    assert(board[i2][j2].getValue() != 0);
     return coords;
   }
 
   public boolean canMove(int i, int j, char c) {
+    assert invariant();
+    //preconditions
+    assert(i >= 0 && i < SIZE);
+    assert(j >= 0 && j < SIZE);
+    assert(board[i][j].getValue() > 0);
+    assert(c == 'w' || c == 'a' || c == 's' || c == 'd');
+
     boolean result = false;
     switch (c) {
       case 'a':
@@ -133,10 +216,18 @@ public class Board {
         }
         break;
     }
+    assert invariant();
     return result;
   }
 
   public boolean join(int i, int j, char c) {
+    assert invariant();
+    //preconditions
+    assert(i >= 0 && i < SIZE);
+    assert(j >= 0 && j < SIZE);
+    assert(board[i][j].getValue() > 0);
+    assert(c == 'w' || c == 'a' || c == 's' || c == 'd');
+
     boolean result = false;
     int scoreAdd = 0;
     switch (c) {
@@ -182,12 +273,19 @@ public class Board {
     }
     if (result) {
       board[i][j].resetBlock();
+      //postcondition
+      assert score < scoreAdd+score;
       score += scoreAdd;
     }
+    assert invariant();
     return result;
   }
 
   public boolean moveBoard(char c) {
+    assert invariant();
+    //preconditions
+    assert(c == 'w' || c == 'a' || c == 's' || c == 'd');
+
     int i = 0;
     int j = 0;
     int currentI = 0;
@@ -327,16 +425,19 @@ public class Board {
     {
       random();
     }
+    assert invariant();
     return done;
   }
 
 
   public boolean isGameOver() {
+    assert invariant();
     boolean movementDone = false;
     int i = 0;
     for (i = 0; i < SIZE; i++) {
       for (int j = 0; j < SIZE; j++) {
         if (board[i][j].getValue() == 0) {
+          assert invariant();
           return false;
         }
       }
@@ -348,18 +449,22 @@ public class Board {
       i++;
     }
     gameOver = !movementDone;
+    assert invariant();
     return gameOver;
   }
 
   public boolean isGameWinned() {
+    assert invariant();
     for (int i = 0; i < SIZE; i++) {
       for (int j = 0; j < SIZE; j++) {
         if (board[i][j].getValue() == 2048) {
           gameWinned = true;
+          assert invariant();
           return true;
         }
       }
     }
+    assert invariant();
     return gameWinned;
   }
 
