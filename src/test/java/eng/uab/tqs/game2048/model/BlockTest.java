@@ -60,6 +60,16 @@ class BlockTest {
     block = new Block(2048, InfoGame.Color.BLACK);
     assertEquals(block.getValue(), 2048);
     assertEquals(block.getColor(), InfoGame.Color.BLACK);
+
+    assertThrows(AssertionError.class, () -> new Block(2, InfoGame.Color.ORANGE));
+
+    //equivalent partitions and limit testing
+    assertThrows(AssertionError.class, () -> new Block(2, InfoGame.Color.NONE));
+    assertThrows(AssertionError.class, () -> new Block(0, InfoGame.Color.RED));
+    assertThrows(AssertionError.class, () -> new Block(-1, InfoGame.Color.RED));
+    assertThrows(AssertionError.class, () -> new Block(-5, InfoGame.Color.RED));
+    assertThrows(AssertionError.class, () -> new Block(2049, InfoGame.Color.RED));
+    assertThrows(AssertionError.class, () -> new Block(3000, InfoGame.Color.RED));
   }
 
   @Test
@@ -178,13 +188,13 @@ class BlockTest {
     assertEquals(block.getColor(), InfoGame.Color.BLACK);
 
     //check it is the last, no changes
-    block.mix();
+    assertThrows(AssertionError.class, () -> block.mix());
     assertEquals(block.getValue(), 2048);
     assertEquals(block.getColor(), InfoGame.Color.BLACK);
 
     //check it is none, no changes
     Block block0 = new Block(0, InfoGame.Color.NONE);
-    block0.mix();
+    assertThrows(AssertionError.class, () -> block0.mix());
     assertEquals(block0.getValue(), 0);
     assertEquals(block0.getColor(), InfoGame.Color.NONE);
   }
