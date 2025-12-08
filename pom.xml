@@ -9,7 +9,6 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <!-- Cambia a 17 para coincidir con GitHub Actions -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -90,11 +89,9 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven.checkstyle.plugin.version}</version>
                 <configuration>
-                    <!-- Cambia a tu archivo Checks.xml -->
-                    <configLocation>Checks.xml</configLocation>
+                    <configLocation>src/main/resources/checks.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
-                    <!-- Añade estas líneas para más control -->
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <violationSeverity>warning</violationSeverity>
                 </configuration>
@@ -109,7 +106,6 @@
                 </executions>
             </plugin>
 
-            <!-- Plugin para ejecutar tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
