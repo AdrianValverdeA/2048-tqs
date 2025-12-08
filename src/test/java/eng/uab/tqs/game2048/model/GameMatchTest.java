@@ -46,4 +46,58 @@ class GameMatchTest {
     assertEquals(board.isGameOver(), false);
     assertEquals(board.isGameWinned(), true);
   }
+
+  @Test
+  void startGameFXTest() {
+    gameMatch = new GameMatch();
+
+    board = new BoardMock();
+    gen = new GeneratorMock();
+
+    board.setRestart(true);
+
+    board.setGenerator(null);
+
+    gameMatch.setBoard(board);
+
+    gameMatch.startGameFX();
+
+    Board resultBoard = gameMatch.getBoard();
+
+    assertNotSame(board, resultBoard);
+
+    assertNotNull(resultBoard.getGenerator());
+
+    assertTrue(resultBoard.getRestart());
+  }
+
+  @Test
+  void startGame_initialRestartAndGeneratorNullTest() {
+    gameMatch = new GameMatch();
+    board = new BoardMock();
+    gen = new GeneratorMock();
+    scanner = new ScannerMovementMock();
+    scanner.setConfig("d");
+    gameMatch.setScanner(scanner);
+    board.setGenerator(gen);
+    gen.setConfig("game_match_win");
+    board.setConfig("default");
+    gameMatch.setBoard(board);
+    gameMatch.startGame();
+
+    Board resultBoard = gameMatch.getBoard();
+
+    assertNotNull(resultBoard.getGenerator());
+    assertTrue(resultBoard.getRestart());
+
+    gen = new GeneratorMock();
+    scanner = new ScannerMovementMock();
+    scanner.setConfig("d");
+    gameMatch.setScanner(scanner);
+    board.setGenerator(gen);
+    gen.setConfig("game_match_win");
+    board.setConfig("default");
+    gameMatch.setBoard(board);
+    //gameMatch.startGame(); // comented because it does infinite loop impossible to do by test
+  }
 }
