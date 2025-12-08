@@ -1,8 +1,5 @@
 package eng.uab.tqs.game2048.model;
 public class InfoGame {
-  public static enum Key {
-    UP, DOWN, LEFT, RIGHT
-  }
 
   public static enum Color{
     NONE(0),
