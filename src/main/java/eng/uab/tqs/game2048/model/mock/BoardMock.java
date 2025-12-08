@@ -109,10 +109,10 @@ public class BoardMock extends Board {
           };
 
           colors = new InfoGame.Color[]{
-              InfoGame.Color.GREEN, InfoGame.Color.ORANGE, InfoGame.Color.NAVY, InfoGame.Color.NAVY,
-              InfoGame.Color.GREY, InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.PINK,
-              InfoGame.Color.ORANGE, InfoGame.Color.RED, InfoGame.Color.BLUE, InfoGame.Color.ORANGE,
-              InfoGame.Color.PINK, InfoGame.Color.GREEN, InfoGame.Color.YELLOW, InfoGame.Color.PINK
+              InfoGame.Color.GREEN, InfoGame.Color.RED, InfoGame.Color.NAVY, InfoGame.Color.NAVY,
+              InfoGame.Color.GREY, InfoGame.Color.YELLOW, InfoGame.Color.GREEN, InfoGame.Color.YELLOW,
+              InfoGame.Color.RED, InfoGame.Color.PURPLE, InfoGame.Color.BLUE, InfoGame.Color.RED,
+              InfoGame.Color.YELLOW, InfoGame.Color.GREEN, InfoGame.Color.ORANGE, InfoGame.Color.PINK
           };
 
           for (int i = 0; i < sequence.length; i+=2) {
