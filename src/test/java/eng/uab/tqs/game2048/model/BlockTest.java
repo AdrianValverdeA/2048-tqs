@@ -15,6 +15,8 @@ class BlockTest {
 
   @Test
   void constructorTest() {
+
+    //All the blocks that can be created
     Block block = new Block(2, InfoGame.Color.GREEN);
     assertEquals(block.getValue(), 2);
     assertEquals(block.getColor(), InfoGame.Color.GREEN);
@@ -62,14 +64,78 @@ class BlockTest {
 
   @Test
   public void resetBlockTest() {
+
+    //Check all the reset cases
+    //Unnecessary checking limit values
+    //blocks with values different to normals
+    //can't be created
+    //we check 2048 value for future implementation
+
     Block block = new Block(2, InfoGame.Color.GREEN);
     block.resetBlock();
     assertEquals(block.getValue(), 0);
     assertEquals(block.getColor(), InfoGame.Color.NONE);
+
+    block = new Block(4, InfoGame.Color.PINK);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+
+    block = new Block(8, InfoGame.Color.YELLOW);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+
+    block = new Block(16, InfoGame.Color.ORANGE);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+
+    block = new Block(32, InfoGame.Color.RED);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+
+    block = new Block(64, InfoGame.Color.BLUE);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+
+    block = new Block(128, InfoGame.Color.PURPLE);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+
+    block = new Block(256, InfoGame.Color.BROWN);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+
+    block = new Block(512, InfoGame.Color.GREY);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+
+    block = new Block(1024, InfoGame.Color.NAVY);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+
+    block = new Block(2048, InfoGame.Color.BLACK);
+    block.resetBlock();
+    assertEquals(block.getValue(), 0);
+    assertEquals(block.getColor(), InfoGame.Color.NONE);
+
   }
 
   @Test
   public void mixTest(){
+
+    //Check all the mix cases
+    //Unnecessary checking limit values
+    //blocks with values different to normals
+    //can't be created
+
     Block block = new Block(2, InfoGame.Color.GREEN);
     block.mix();
     assertEquals(block.getValue(), 4);
