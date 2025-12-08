@@ -4,6 +4,8 @@ import eng.uab.tqs.game2048.model.mock.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -76,7 +78,32 @@ class GameTest {
   }
 
   @Test
+  void menu1() throws Exception {
+    scan.setConfig("inputName");
+    BoardMock board = new BoardMock();
+    board.setScore(2000);
+    GameMatch gm = game.getGameMatch();
+    scannerMovement.setConfig("d");
+    gm.setScanner(scannerMovement);
+    board.setGenerator(generator);
+    generator.setConfig("game_match_win");
+    board.setConfig("default");
+    gm.setBoard(board);
+    scan.setConfig("1");
+    game.menu();
+    assertTrue(game.getExit());
+  }
+
+  @Test
   void menu2() throws Exception {
+    scan.setConfig("2");
+    game.menu();
+    assertNotEquals(game.getScores(), null);
+  }
+
+  @Test
+  void menu2_exist() throws Exception {
+    fm.setConfig("INVALID_FILE");
     scan.setConfig("2");
     game.menu();
     assertNotEquals(game.getScores(), null);
@@ -125,5 +152,63 @@ class GameTest {
     List<String> s4 = game.getScores();
     assertEquals(10, s4.size());
 
+  }
+
+  @Test
+  void playGameFXTest() {
+    BoardMock board = new BoardMock();
+    GeneratorMock gen = new GeneratorMock();
+    GameMatch gm = game.getGameMatch();
+
+    board.setGenerator(gen);
+    gen.setConfig("game_match_win");
+    board.setConfig("default");
+
+    gm.setBoard(board);
+
+    assertDoesNotThrow(() -> game.playGameFX());
+    assertNotNull(gm.getBoard());
+
+    assertTrue(gm.getBoard().getRestart());
+  }
+
+  @Test
+  void showScores_ReadAllIOExceptionTest() {
+    FileManagerMock fm = new FileManagerMock();
+    fm.setConfig("ERROR_FILE");
+
+    Game game = new Game();
+    game.setManager(fm);
+
+    assertDoesNotThrow(() -> game.showScores());
+
+    List<String> s = game.getScores();
+    assertNotNull(s);
+    assertTrue(s.isEmpty());
+  }
+
+  @Test
+  void saveScore_dataDriven() throws Exception {
+
+    List<String> names = Files.readAllLines(
+        Path.of("src/test/java/eng/uab/tqs/game2048/model/datadriven/score.csv"));
+
+    for (String name : names) {
+
+      Game game = new Game();
+      FileManagerMock fm = new FileManagerMock();
+      game.setManager(fm);
+
+      fm.setConfig("EMPTY_FILE");
+
+      BoardMock board = new BoardMock();
+      board.setScore(100);
+
+      game.getGameMatch().setBoard(board);
+
+      game.saveScore(name);
+
+      assertNotNull(game.getScores());
+    }
   }
 }
