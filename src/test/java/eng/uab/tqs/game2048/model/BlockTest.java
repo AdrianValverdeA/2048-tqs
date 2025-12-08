@@ -17,7 +17,7 @@ class BlockTest {
   void constructorTest() {
 
     //All the blocks that can be created
-    Block block = new Block(2, InfoGame.Color.GREEN);
+    Block block = new Block(3, InfoGame.Color.GREEN);
     assertEquals(block.getValue(), 2);
     assertEquals(block.getColor(), InfoGame.Color.GREEN);
 
