@@ -133,6 +133,12 @@ public class GeneratorMock extends Generator
             InfoGame.Color.GREEN
         };
         break;
+
+      case "conditionCovJoin":
+        this.sequence = new int[]{1, 1, 1, 2, 2, 1};
+        this.colors = new InfoGame.Color[]{InfoGame.Color.PINK, InfoGame.Color.YELLOW,  InfoGame.Color.RED};
+        this.values = new int[]{4, 8, 32};
+        break;
     }
   }
 }
