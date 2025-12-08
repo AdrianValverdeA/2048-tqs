@@ -1,0 +1,547 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > BoardMock</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">eng.uab.tqs.game2048.model.mock</a>
+</div>
+
+<h1>Coverage Summary for Class: BoardMock (eng.uab.tqs.game2048.model.mock)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BoardMock</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96,1%
+  </span>
+  <span class="absValue">
+    (124/129)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97%
+  </span>
+  <span class="absValue">
+    (195/201)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package eng.uab.tqs.game2048.model.mock;
+&nbsp;
+&nbsp;import eng.uab.tqs.game2048.model.*;
+&nbsp;
+&nbsp;import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Random;
+&nbsp;
+&nbsp;import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
+&nbsp;public class BoardMock extends Board {
+&nbsp;    private Block[][] board;
+&nbsp;    private int score;
+&nbsp;    private Generator gen;
+<b class="fc">&nbsp;    private Character[] movements = {&#39;w&#39;,&#39;a&#39;,&#39;s&#39;,&#39;d&#39;};</b>
+<b class="fc">&nbsp;    private boolean gameOver = false;</b>
+<b class="fc">&nbsp;    private boolean gameWinned = false;</b>
+&nbsp;    private boolean simulated;
+&nbsp;
+<b class="fc">&nbsp;    public BoardMock() {</b>
+<b class="fc">&nbsp;      this.board = new Block[SIZE][SIZE];</b>
+<b class="fc">&nbsp;      this.score = 0;</b>
+<b class="fc">&nbsp;      this.gen = new Generator();</b>
+<b class="fc">&nbsp;      for (int i = 0; i &lt; SIZE; i++) {</b>
+<b class="fc">&nbsp;        for (int j = 0; j &lt; SIZE; j++) {</b>
+<b class="fc">&nbsp;          this.board[i][j] = new Block(0, InfoGame.Color.NONE);</b>
+&nbsp;        }
+&nbsp;      }
+<b class="fc">&nbsp;      this.simulated = false;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public BoardMock(BoardMock other) {</b>
+<b class="fc">&nbsp;      this.board = new Block[SIZE][SIZE];</b>
+<b class="fc">&nbsp;      Block[][] b2 = other.getBoard();</b>
+<b class="fc">&nbsp;      for (int i = 0; i &lt; SIZE; i++) {</b>
+<b class="fc">&nbsp;        for (int j = 0; j &lt; SIZE; j++) {</b>
+<b class="fc">&nbsp;          this.board[i][j] = new Block(</b>
+<b class="fc">&nbsp;              b2[i][j].getValue(),</b>
+<b class="fc">&nbsp;              b2[i][j].getColor()</b>
+&nbsp;          );
+&nbsp;        }
+&nbsp;      }
+&nbsp;
+<b class="fc">&nbsp;      this.simulated = true;</b>
+<b class="fc">&nbsp;      this.score = other.getScore();</b>
+<b class="fc">&nbsp;      this.gen = other.getGenerator();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Block[][] getBoard() {
+<b class="fc">&nbsp;      return board;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void drawBoard() {
+<b class="fc">&nbsp;      for (int i = 0; i &lt; SIZE; i++) {</b>
+<b class="fc">&nbsp;        for (int j = 0; j &lt; SIZE; j++) {</b>
+<b class="fc">&nbsp;          System.out.print(board[i][j].getValue());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        System.out.println(&quot;&quot;);</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void randomInicialize() {
+<b class="fc">&nbsp;    return;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setConfig(String config) {
+&nbsp;      int[] sequence;
+&nbsp;      int[] values;
+&nbsp;      InfoGame.Color[] colors;
+<b class="fc">&nbsp;      switch (config) {</b>
+&nbsp;        case &quot;loose&quot;:
+<b class="fc">&nbsp;          sequence = new int[]{</b>
+&nbsp;              0, 0, 0, 1,
+&nbsp;              1, 0, 1, 1, 1, 2, 1, 3,
+&nbsp;              2, 0, 2, 1, 2, 2, 2, 3,
+&nbsp;              3, 0, 3, 1, 3, 2, 3, 3
+&nbsp;          };
+&nbsp;
+<b class="fc">&nbsp;          values = new int[]{</b>
+&nbsp;              2, 32,
+&nbsp;              2, 8, 2, 8,
+&nbsp;              32, 128, 64, 32,
+&nbsp;              8, 2, 16, 4
+&nbsp;          };
+<b class="fc">&nbsp;          colors = new InfoGame.Color[]{</b>
+&nbsp;              InfoGame.Color.GREEN, InfoGame.Color.RED,
+&nbsp;              InfoGame.Color.GREEN, InfoGame.Color.YELLOW, InfoGame.Color.GREEN, InfoGame.Color.YELLOW,
+&nbsp;              InfoGame.Color.RED, InfoGame.Color.PURPLE, InfoGame.Color.BLUE, InfoGame.Color.RED,
+&nbsp;              InfoGame.Color.YELLOW, InfoGame.Color.GREEN, InfoGame.Color.ORANGE, InfoGame.Color.PINK
+&nbsp;          };
+&nbsp;
+<b class="fc">&nbsp;          for (int i = 0; i &lt; sequence.length; i+=2) {</b>
+<b class="fc">&nbsp;            board[sequence[i]][sequence[i+1]] = new Block(values[i/2], colors[i/2]);</b>
+&nbsp;          }
+&nbsp;          break;
+&nbsp;
+&nbsp;        default:
+<b class="fc">&nbsp;          sequence = new int[]{</b>
+&nbsp;              0, 0, 0, 1, 0, 2, 0, 3,
+&nbsp;              1, 0, 1, 1, 1, 2, 1, 3,
+&nbsp;              2, 0, 2, 1, 2, 2, 2, 3,
+&nbsp;              3, 0, 3, 1, 3, 2, 3, 3
+&nbsp;          };
+&nbsp;
+<b class="fc">&nbsp;          values = new int[]{</b>
+&nbsp;              2, 32, 1024, 1024,
+&nbsp;              512, 8, 2, 8,
+&nbsp;              32, 128, 64, 32,
+&nbsp;              8, 2, 16, 4
+&nbsp;          };
+&nbsp;
+<b class="fc">&nbsp;          colors = new InfoGame.Color[]{</b>
+&nbsp;              InfoGame.Color.GREEN, InfoGame.Color.RED, InfoGame.Color.NAVY, InfoGame.Color.NAVY,
+&nbsp;              InfoGame.Color.GREY, InfoGame.Color.YELLOW, InfoGame.Color.GREEN, InfoGame.Color.YELLOW,
+&nbsp;              InfoGame.Color.RED, InfoGame.Color.PURPLE, InfoGame.Color.BLUE, InfoGame.Color.RED,
+&nbsp;              InfoGame.Color.YELLOW, InfoGame.Color.GREEN, InfoGame.Color.ORANGE, InfoGame.Color.PINK
+&nbsp;          };
+&nbsp;
+<b class="fc">&nbsp;          for (int i = 0; i &lt; sequence.length; i+=2) {</b>
+<b class="fc">&nbsp;            board[sequence[i]][sequence[i+1]] = new Block(values[i/2], colors[i/2]);</b>
+&nbsp;          }
+&nbsp;          break;
+&nbsp;      }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void random() {
+<b class="fc">&nbsp;      if (!simulated) {</b>
+&nbsp;        int x, y;
+&nbsp;        do {
+<b class="fc">&nbsp;          x = gen.genRandom();</b>
+<b class="fc">&nbsp;          y = gen.genRandom();</b>
+<b class="pc">&nbsp;        } while (board[x][y].getValue() != 0);</b>
+&nbsp;
+<b class="fc">&nbsp;        board[x][y] = new Block(2, InfoGame.Color.GREEN);</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;
+&nbsp;  public void setGenerator(Generator gen) {
+<b class="fc">&nbsp;    this.gen = gen;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public Generator getGenerator()
+&nbsp;  {
+<b class="fc">&nbsp;    return this.gen;</b>
+&nbsp;  }
+&nbsp;  public int[] moveBlock(int i, int j, char c) {
+<b class="fc">&nbsp;    int i2 = i;</b>
+<b class="fc">&nbsp;    int j2 = j;</b>
+<b class="pc">&nbsp;    switch (c) {</b>
+&nbsp;      case &#39;a&#39;:
+<b class="fc">&nbsp;        j2 = j-1;</b>
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;w&#39;:
+<b class="fc">&nbsp;        i2 = i-1;</b>
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;d&#39;:
+<b class="fc">&nbsp;        j2 = j+1;</b>
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;s&#39;:
+<b class="fc">&nbsp;        i2 = i+1;</b>
+&nbsp;        break;
+&nbsp;    }
+<b class="fc">&nbsp;    board[i2][j2] = new Block(board[i][j].getValue(), board[i][j].getColor());</b>
+<b class="fc">&nbsp;    board[i][j].resetBlock();</b>
+<b class="fc">&nbsp;    int[] coords = {i2,j2};</b>
+<b class="fc">&nbsp;    return coords;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public boolean canMove(int i, int j, char c) {
+<b class="fc">&nbsp;    boolean result = false;</b>
+<b class="pc">&nbsp;    switch (c) {</b>
+&nbsp;      case &#39;a&#39;:
+<b class="fc">&nbsp;        if (j &gt; 0) {</b>
+<b class="fc">&nbsp;          result = (0 == board[i][j - 1].getValue());</b>
+&nbsp;        }
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;w&#39;:
+<b class="fc">&nbsp;        if (i &gt; 0) {</b>
+<b class="fc">&nbsp;          result = (0 == board[i - 1][j].getValue());</b>
+&nbsp;        }
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;d&#39;:
+<b class="fc">&nbsp;        if (j &lt; SIZE - 1) {</b>
+<b class="fc">&nbsp;          result = (0 == board[i][j + 1].getValue());</b>
+&nbsp;        }
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;s&#39;:
+<b class="fc">&nbsp;        if (i &lt; SIZE - 1) {</b>
+<b class="fc">&nbsp;          result = (0 == board[i + 1][j].getValue());</b>
+&nbsp;        }
+&nbsp;        break;
+&nbsp;    }
+<b class="fc">&nbsp;    return result;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public boolean join(int i, int j, char c) {
+<b class="fc">&nbsp;    boolean result = false;</b>
+<b class="fc">&nbsp;    int scoreAdd = 0;</b>
+<b class="pc">&nbsp;    switch (c) {</b>
+&nbsp;      case &#39;w&#39;:
+<b class="fc">&nbsp;        if (i &gt; 0) {</b>
+<b class="fc">&nbsp;          if (board[i][j].getValue() == board[i-1][j].getValue()) {</b>
+<b class="fc">&nbsp;            board[i-1][j].mix();</b>
+<b class="fc">&nbsp;            result = true;</b>
+<b class="fc">&nbsp;            scoreAdd += board[i-1][j].getValue();</b>
+&nbsp;          }
+&nbsp;        }
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;a&#39;:
+<b class="fc">&nbsp;        if (j &gt; 0) {</b>
+<b class="fc">&nbsp;          if (board[i][j].getValue() == board[i][j - 1].getValue()) {</b>
+<b class="fc">&nbsp;            board[i][j-1].mix();</b>
+<b class="fc">&nbsp;            result = true;</b>
+<b class="fc">&nbsp;            scoreAdd += board[i][j-1].getValue();</b>
+&nbsp;          }
+&nbsp;        }
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;s&#39;:
+<b class="fc">&nbsp;        if (i &lt; SIZE - 1) {</b>
+<b class="pc">&nbsp;          if (board[i][j].getValue() == board[i+1][j].getValue()) {</b>
+<b class="nc">&nbsp;            board[i+1][j].mix();</b>
+<b class="nc">&nbsp;            result = true;</b>
+<b class="nc">&nbsp;            scoreAdd += board[i+1][j].getValue();</b>
+&nbsp;          }
+&nbsp;        }
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;d&#39;:
+<b class="fc">&nbsp;        if (j &lt; SIZE - 1) {</b>
+<b class="fc">&nbsp;          if (board[i][j].getValue() == board[i][j + 1].getValue()) {</b>
+<b class="fc">&nbsp;            board[i][j+1].mix();</b>
+<b class="fc">&nbsp;            result = true;</b>
+<b class="fc">&nbsp;            scoreAdd += board[i][j+1].getValue();</b>
+&nbsp;          }
+&nbsp;        }
+&nbsp;        break;
+&nbsp;    }
+<b class="fc">&nbsp;    if (result) {</b>
+<b class="fc">&nbsp;      board[i][j].resetBlock();</b>
+<b class="fc">&nbsp;      score += scoreAdd;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    return result;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public boolean moveBoard(char c) {
+<b class="fc">&nbsp;    int i = 0;</b>
+<b class="fc">&nbsp;    int j = 0;</b>
+<b class="fc">&nbsp;    int currentI = 0;</b>
+<b class="fc">&nbsp;    int currentJ = 0;</b>
+<b class="fc">&nbsp;    boolean done = false;</b>
+<b class="fc">&nbsp;    boolean joined = false;</b>
+<b class="pc">&nbsp;    switch (c) {</b>
+&nbsp;      case &#39;w&#39;:
+<b class="fc">&nbsp;        i = 1;</b>
+<b class="fc">&nbsp;        j = 0;</b>
+<b class="fc">&nbsp;        while (i &lt; SIZE)</b>
+&nbsp;        {
+<b class="fc">&nbsp;          while (j &lt; SIZE)</b>
+&nbsp;          {
+<b class="pc">&nbsp;            if (board[i][j].getValue() == 0)</b>
+&nbsp;            {
+<b class="nc">&nbsp;              j++;</b>
+&nbsp;              continue;
+&nbsp;            }
+<b class="fc">&nbsp;            currentI = i;</b>
+<b class="fc">&nbsp;            currentJ = j;</b>
+<b class="fc">&nbsp;            while(canMove(currentI, currentJ, c))</b>
+&nbsp;            {
+<b class="fc">&nbsp;              int[] coords = moveBlock(currentI, currentJ, c);</b>
+<b class="fc">&nbsp;              currentI =  coords[0];</b>
+<b class="fc">&nbsp;              currentJ = coords[1];</b>
+<b class="fc">&nbsp;              done = true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            joined = join(currentI,currentJ,c);</b>
+<b class="fc">&nbsp;            if (joined) {</b>
+<b class="fc">&nbsp;              done = true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            j++;</b>
+&nbsp;          }
+<b class="fc">&nbsp;          i++;</b>
+<b class="fc">&nbsp;          j = 0;</b>
+&nbsp;        }
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;a&#39;:
+<b class="fc">&nbsp;        i = 0;</b>
+<b class="fc">&nbsp;        j = 1;</b>
+<b class="fc">&nbsp;        while (j &lt; SIZE)</b>
+&nbsp;        {
+<b class="fc">&nbsp;          while (i &lt; SIZE)</b>
+&nbsp;          {
+<b class="fc">&nbsp;            if (board[i][j].getValue() == 0)</b>
+&nbsp;            {
+<b class="fc">&nbsp;              i++;</b>
+&nbsp;              continue;
+&nbsp;            }
+<b class="fc">&nbsp;            currentI = i;</b>
+<b class="fc">&nbsp;            currentJ = j;</b>
+<b class="fc">&nbsp;            while(canMove(currentI, currentJ, c))</b>
+&nbsp;            {
+<b class="fc">&nbsp;              int[] coords = moveBlock(currentI, currentJ, c);</b>
+<b class="fc">&nbsp;              currentI =  coords[0];</b>
+<b class="fc">&nbsp;              currentJ = coords[1];</b>
+<b class="fc">&nbsp;              done = true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            joined = join(currentI,currentJ,c);</b>
+<b class="fc">&nbsp;            if (joined) {</b>
+<b class="fc">&nbsp;              done = true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            i++;</b>
+&nbsp;          }
+<b class="fc">&nbsp;          j++;</b>
+<b class="fc">&nbsp;          i = 0;</b>
+&nbsp;        }
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;s&#39;:
+<b class="fc">&nbsp;        i = 2;</b>
+<b class="fc">&nbsp;        j = 0;</b>
+<b class="fc">&nbsp;        while (i &gt;= 0)</b>
+&nbsp;        {
+<b class="fc">&nbsp;          while (j &lt; SIZE)</b>
+&nbsp;          {
+<b class="pc">&nbsp;            if (board[i][j].getValue() == 0)</b>
+&nbsp;            {
+<b class="nc">&nbsp;              j++;</b>
+&nbsp;              continue;
+&nbsp;            }
+<b class="fc">&nbsp;            currentI = i;</b>
+<b class="fc">&nbsp;            currentJ = j;</b>
+<b class="fc">&nbsp;            while(canMove(currentI, currentJ, c))</b>
+&nbsp;            {
+<b class="fc">&nbsp;              int[] coords = moveBlock(currentI, currentJ, c);</b>
+<b class="fc">&nbsp;              currentI =  coords[0];</b>
+<b class="fc">&nbsp;              currentJ = coords[1];</b>
+<b class="fc">&nbsp;              done = true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            joined = join(currentI,currentJ,c);</b>
+<b class="pc">&nbsp;            if (joined) {</b>
+<b class="nc">&nbsp;              done = true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            j++;</b>
+&nbsp;          }
+<b class="fc">&nbsp;          i--;</b>
+<b class="fc">&nbsp;          j = 0;</b>
+&nbsp;        }
+&nbsp;        break;
+&nbsp;
+&nbsp;      case &#39;d&#39;:
+<b class="fc">&nbsp;        i = 0;</b>
+<b class="fc">&nbsp;        j = 2;</b>
+<b class="fc">&nbsp;        while (j &gt;= 0)</b>
+&nbsp;        {
+<b class="fc">&nbsp;          while (i &lt; SIZE)</b>
+&nbsp;          {
+<b class="fc">&nbsp;            if (board[i][j].getValue() == 0)</b>
+&nbsp;            {
+<b class="fc">&nbsp;              i++;</b>
+&nbsp;              continue;
+&nbsp;            }
+<b class="fc">&nbsp;            currentI = i;</b>
+<b class="fc">&nbsp;            currentJ = j;</b>
+<b class="fc">&nbsp;            while(canMove(currentI, currentJ, c))</b>
+&nbsp;            {
+<b class="fc">&nbsp;              int[] coords = moveBlock(currentI, currentJ, c);</b>
+<b class="fc">&nbsp;              currentI =  coords[0];</b>
+<b class="fc">&nbsp;              currentJ = coords[1];</b>
+<b class="fc">&nbsp;              done = true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            joined = join(currentI,currentJ,c);</b>
+<b class="fc">&nbsp;            if (joined) {</b>
+<b class="fc">&nbsp;              done = true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            i++;</b>
+&nbsp;          }
+<b class="fc">&nbsp;          j--;</b>
+<b class="fc">&nbsp;          i = 0;</b>
+&nbsp;        }
+&nbsp;        break;
+&nbsp;    }
+<b class="fc">&nbsp;    if (done)</b>
+&nbsp;    {
+<b class="fc">&nbsp;      random();</b>
+&nbsp;    }
+<b class="fc">&nbsp;    return done;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;
+&nbsp;  public boolean isGameOver() {
+<b class="fc">&nbsp;    boolean movementDone = false;</b>
+<b class="fc">&nbsp;    int i = 0;</b>
+<b class="fc">&nbsp;    for (i = 0; i &lt; SIZE; i++) {</b>
+<b class="fc">&nbsp;      for (int j = 0; j &lt; SIZE; j++) {</b>
+<b class="fc">&nbsp;        if (board[i][j].getValue() == 0) {</b>
+<b class="fc">&nbsp;          return false;</b>
+&nbsp;        }
+&nbsp;      }
+&nbsp;    }
+<b class="fc">&nbsp;    i = 0;</b>
+<b class="fc">&nbsp;    while(!movementDone &amp;&amp; i &lt; movements.length) {</b>
+<b class="fc">&nbsp;      BoardMock checkBoard = new BoardMock(this);</b>
+<b class="fc">&nbsp;      movementDone = checkBoard.moveBoard(movements[i]);</b>
+<b class="fc">&nbsp;      i++;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    gameOver = !movementDone;</b>
+<b class="fc">&nbsp;    return gameOver;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public boolean isGameWinned() {
+<b class="fc">&nbsp;    for (int i = 0; i &lt; SIZE; i++) {</b>
+<b class="fc">&nbsp;      for (int j = 0; j &lt; SIZE; j++) {</b>
+<b class="fc">&nbsp;        if (board[i][j].getValue() == 2048) {</b>
+<b class="fc">&nbsp;          gameWinned = true;</b>
+<b class="fc">&nbsp;          return true;</b>
+&nbsp;        }
+&nbsp;      }
+&nbsp;    }
+<b class="fc">&nbsp;    return gameWinned;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public void setScore(int score) {
+<b class="fc">&nbsp;      this.score = score;</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-12-08 20:59</div>
+</div>
+</body>
+</html>
