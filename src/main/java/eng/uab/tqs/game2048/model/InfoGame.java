@@ -1,6 +1,10 @@
 package eng.uab.tqs.game2048.model;
+
+//This class represents all the information
+//that will be in the game
 public class InfoGame {
 
+  //The colors that the blocks can have
   public static enum Color{
     NONE(0),
     GREEN(1),
@@ -17,6 +21,7 @@ public class InfoGame {
 
     private final int value;
 
+    //
     Color(int value) {
       //precondition
       assert(value >= 0 && value <= 11);
