@@ -113,30 +113,35 @@ class BoardTest {
     assertEquals(b[1][2].getColor(),InfoGame.Color.NONE);
     assertEquals(newCoords[0], 1);
     assertEquals(newCoords[1], 3);
-    //out of index test
-    /*
-    board = new Board();
-    board.setGenerator(gen);
-    board.randomInicialize();
-    try {
-      newCoords = board.moveBlock(3,3,'d'); //right
-    } catch (Exception e) {
-      fail("Out of index");
-    }
-    b = board.getBoard();
-    assertEquals(b[3][3].getValue(),2);
 
+    //limit testing out of index
     board = new Board();
     board.setGenerator(gen);
     board.randomInicialize();
-    try {
-      newCoords = board.moveBlock(3,3,'s'); //down
-    } catch (Exception e) {
-      fail("Out of index");
-    }
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> board.moveBlock(3, 3, 'd'));
     b = board.getBoard();
     assertEquals(b[3][3].getValue(),2);
-    */
+    assertEquals(b[3][3].getColor(),InfoGame.Color.GREEN);
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> board.moveBlock(3, 3, 's'));
+    assertEquals(b[3][3].getValue(),2);
+    assertEquals(b[3][3].getColor(),InfoGame.Color.GREEN);
+
+    board.moveBlock(1,2,'a');
+    board.moveBlock(1,1,'a');
+    board.moveBlock(1,0,'w');
+    assertEquals(b[0][0].getValue(),2);
+    assertEquals(b[0][0].getColor(),InfoGame.Color.GREEN);
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> board.moveBlock(0, 0, 'a'));
+    assertEquals(b[0][0].getValue(),2);
+    assertEquals(b[0][0].getColor(),InfoGame.Color.GREEN);
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> board.moveBlock(0, 0, 'w'));
+    assertEquals(b[0][0].getValue(),2);
+    assertEquals(b[0][0].getColor(),InfoGame.Color.GREEN);
+
+    assertThrows(AssertionError.class, () -> board.moveBlock(-1,0,'w'));
+    assertThrows(AssertionError.class, () -> board.moveBlock(0,0,'x'));
+    b[0][0] = null;
+    assertThrows(AssertionError.class, () -> board.moveBlock(0,0,'s'));
   }
 
   @Test
@@ -154,24 +159,79 @@ class BoardTest {
     assertFalse(board.canMove(0,0,'w'));
     assertFalse(board.canMove(0,0,'a'));
 
+    //condition coverage and limit testing
+    assertThrows(AssertionError.class, () -> board.canMove(0,-1,'a'));
+    assertThrows(AssertionError.class, () -> board.canMove(-1,0,'w'));
+    assertThrows(AssertionError.class, () -> board.canMove(3,4,'d'));
+    assertThrows(AssertionError.class, () -> board.canMove(4,3,'s'));
+
     //pairwise
     assertFalse(board.canMove(0,0,'w'));
-    assertFalse(board.canMove(0,1,'a'));
-    assertFalse(board.canMove(0,2,'s'));
-    assertFalse(board.canMove(0,3,'d'));
-    assertTrue(board.canMove(1,1,'s'));
+    assertThrows(AssertionError.class, () -> board.canMove(0, 1, 'a'));
+    assertThrows(AssertionError.class, () -> board.canMove(0, 2, 's'));
+    assertThrows(AssertionError.class, () -> board.canMove(0, 3, 'd'));
+    assertThrows(AssertionError.class, () -> board.canMove(1, 1, 's'));
     assertTrue(board.canMove(1,2,'d'));
-    assertTrue(board.canMove(1,3,'w'));
-    assertFalse(board.canMove(1,0,'a'));
-    assertFalse(board.canMove(2,2,'w'));
-    assertTrue(board.canMove(2,3,'a'));
-    assertTrue(board.canMove(2,0,'s'));
-    assertTrue(board.canMove(2,1,'d'));
+    assertThrows(AssertionError.class, () -> board.canMove(1,3,'w'));
+    assertThrows(AssertionError.class, () -> board.canMove(1,0,'a'));
+    assertThrows(AssertionError.class, () -> board.canMove(2,2,'w'));
+    assertThrows(AssertionError.class, () -> board.canMove(2,3,'a'));
+    assertThrows(AssertionError.class, () -> board.canMove(2,0,'s'));
+    assertThrows(AssertionError.class, () -> board.canMove(2,1,'d'));
     assertFalse(board.canMove(3,3,'s'));
-    assertTrue(board.canMove(3,0,'d'));
-    assertTrue(board.canMove(3,1,'w'));
-    assertTrue(board.canMove(3,2,'a'));
+    assertThrows(AssertionError.class, () -> board.canMove(3,0,'d'));
+    assertThrows(AssertionError.class, () -> board.canMove(3,1,'w'));
+    assertThrows(AssertionError.class, () -> board.canMove(3,2,'a'));
 
+    board = new Board();
+    gen.setConfig("complex_movement");
+    board.setGenerator(gen);
+    board.randomInicialize();
+    assertFalse(board.canMove(1,2,'s'));
+    assertFalse(board.canMove(1,2,'a'));
+    assertFalse(board.canMove(2,2,'w'));
+    assertFalse(board.canMove(2,2,'a'));
+    assertFalse(board.canMove(2,1,'d'));
+
+    //limit testing and condition coverage
+
+    Board board = new  Board();
+    board.setGenerator(gen);
+    gen.setConfig("conditionCovJoin");
+    board.randomInicialize();
+    Block[][] b2 = board.getBoard();
+
+    assertThrows(AssertionError.class, () -> board.join(1,4,'d'));
+    board.join(1,1,'d');
+    assertEquals(4, b2[1][1].getValue());
+    assertEquals(InfoGame.Color.PINK, b2[1][1].getColor());
+    assertEquals(8, b2[1][2].getValue());
+    assertEquals(InfoGame.Color.YELLOW, b2[1][2].getColor());
+    assertEquals(0, board.getScore());
+
+    assertThrows(AssertionError.class, () -> board.join(4,1,'s'));
+    board.join(1,1,'s');
+    assertEquals(4, b2[1][1].getValue());
+    assertEquals(InfoGame.Color.PINK, b2[1][1].getColor());
+    assertEquals(32, b2[2][1].getValue());
+    assertEquals(InfoGame.Color.RED, b2[2][1].getColor());
+    assertEquals(0, board.getScore());
+
+    assertThrows(AssertionError.class, () -> board.join(1,-1,'a'));
+    board.join(1,2,'a');
+    assertEquals(4, b2[1][1].getValue());
+    assertEquals(InfoGame.Color.PINK, b2[1][1].getColor());
+    assertEquals(8, b2[1][2].getValue());
+    assertEquals(InfoGame.Color.YELLOW, b2[1][2].getColor());
+    assertEquals(0, board.getScore());
+
+    assertThrows(AssertionError.class, () -> board.join(-1,1,'w'));
+    board.join(2,1,'w');
+    assertEquals(4, b2[1][1].getValue());
+    assertEquals(InfoGame.Color.PINK, b2[1][1].getColor());
+    assertEquals(32, b2[2][1].getValue());
+    assertEquals(InfoGame.Color.RED, b2[2][1].getColor());
+    assertEquals(0, board.getScore());
   }
 
   @Test
@@ -339,5 +399,41 @@ class BoardTest {
         assertEquals(board.getScore(), 8);
         board.moveBoard('s');
         assertEquals(board.getScore(), 16);
+    }
+
+    @Test
+    void loopNestedGameOver()
+    {
+      //interior simple loop
+      Board board = new Board();
+      assertFalse(board.isGameOver());
+      Block[][] b = board.getBoard();
+
+      //some iterations
+      for(int j = 0; j < SIZE; j++)
+      {b[0][j] = new Block(2, InfoGame.Color.GREEN);}
+      assertFalse(board.isGameOver());
+
+      //half iterations
+      for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++) {
+          b[i][j] = new Block(2, InfoGame.Color.GREEN);
+        }
+      }
+
+      assertFalse(board.isGameOver());
+
+
+      //full iterations
+      for (int i = 0; i < SIZE; i++ )
+      {
+        for (int j = 0; j < SIZE; j++ )
+        {b[0][j] = new Block(2, InfoGame.Color.GREEN);}
+      }
+
+      boolean result = board.isGameOver();
+      //we just want to run through all the board
+      assertTrue(result || !result);
+
     }
 }
