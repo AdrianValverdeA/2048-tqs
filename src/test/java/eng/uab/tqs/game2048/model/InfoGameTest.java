@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InfoGameTest {
 
+  // we can't do limit testing because enums can't be created with different values
   @Test
   void getColorTest()
   {
@@ -45,5 +46,4 @@ class InfoGameTest {
     color = InfoGame.Color.BLACK;
     assertEquals(11,color.getValue());
   }
-
 }
