@@ -20,6 +20,7 @@ class GameMatchTest {
     scanner = new ScannerMovementMock();
   }
 
+  //execution flow check in this class
   @Test
   void startGameTest() {
     gameMatch = new GameMatch();

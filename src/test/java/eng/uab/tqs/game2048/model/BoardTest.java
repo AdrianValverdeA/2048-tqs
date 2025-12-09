@@ -22,6 +22,7 @@ class BoardTest {
 
   @Test
   void constructorTest() {
+    // initialize all to 0 and none
     Block[][] b = board.getBoard();
     for (Block[] blockLine : b){
       for (Block block : blockLine){
@@ -35,6 +36,7 @@ class BoardTest {
 
   @Test
   void randomInicializeTest() {
+    // check if 2 blocks are created  and if both are equal to 2 (sum = 4)
     board.randomInicialize();
     Block[][] b = board.getBoard();
     int values = 0;
@@ -55,6 +57,7 @@ class BoardTest {
 
   @Test
   void randomInicializeMockTest() {
+    // use generator to inicialize  the board
     board.setGenerator(gen);
     board.randomInicialize();
     Block[][] b = board.getBoard();
@@ -118,7 +121,7 @@ class BoardTest {
     assertEquals(newCoords[0], 1);
     assertEquals(newCoords[1], 3);
 
-    //limit testing out of index
+    //limit testing out of index, equivalent partitions, limit and boundary values
     board = new Board();
     board.setGenerator(gen);
     board.randomInicialize();
@@ -340,7 +343,7 @@ class BoardTest {
     board.randomInicialize();
     assertEquals(board.isGameOver(), true);
 
-
+    //full except 1
     Board board = new Board();
     gen.setConfig("game_over_not_1");
     board.setGenerator(gen);
@@ -451,7 +454,7 @@ class BoardTest {
 
     }
 
-
+  //data driven test
   @Test
   void moveBoard_dataDriven() throws Exception {
     List<String> lines = Files.readAllLines(

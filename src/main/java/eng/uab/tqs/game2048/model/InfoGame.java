@@ -1,6 +1,9 @@
 package eng.uab.tqs.game2048.model;
-public class InfoGame {
 
+//This class represents all the information
+//that will be in the game
+public class InfoGame {
+  //The colors that the blocks can have
   public static enum Color{
     NONE(0),
     GREEN(1),

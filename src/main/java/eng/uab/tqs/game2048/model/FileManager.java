@@ -4,6 +4,8 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
+//this class is used for doing IOC and making possible
+// to inject a mock. The full class is java.util functions
 public class FileManager {
 
   public boolean exists(String path) throws IOException {

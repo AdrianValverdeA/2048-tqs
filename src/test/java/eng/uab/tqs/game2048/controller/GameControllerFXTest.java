@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameControllerFXTest {
 
+  //execution flow check in this class
   @Test
   void testOnStartGame() {
     GameMock model = new GameMock();

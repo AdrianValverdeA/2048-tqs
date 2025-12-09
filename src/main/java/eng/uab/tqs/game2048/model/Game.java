@@ -4,6 +4,9 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
+//class used for show the main menu and roles the
+//main class of model part
+
 public class Game {
   private String scoreFile = "scores.txt";
   private ScannerGame scanner;
@@ -27,6 +30,7 @@ public class Game {
     this.exit = false;
   }
 
+  //shows the menu and act depend on the input
   public void menu() {
     assert(invariant());
     while (!exit) {
@@ -58,6 +62,7 @@ public class Game {
     assert(invariant());
   }
 
+  //show scores via cmd, now is useless
   public void showScores() {
     assert(invariant());
     System.out.println("\n=== HIGH SCORES ===");
@@ -97,6 +102,7 @@ public class Game {
     assert(scores != null);
   }
 
+  //show scores for view
   public void showScoresFX() {
     assert(invariant());
     scores = new ArrayList<>();
@@ -112,6 +118,7 @@ public class Game {
     assert(scores != null);
   }
 
+  //start game for playing the game on cmd, now is useless
   public void playGame()
   {
     assert(invariant());
@@ -121,6 +128,8 @@ public class Game {
     assert(gameMatch.getBoard() != null);
     assert(invariant());
   }
+
+  //start game for playing the game on view
   public void playGameFX()
   {
     assert(invariant());
@@ -130,6 +139,8 @@ public class Game {
     assert(invariant());
   }
 
+  //save the score of a player on a .txt
+  //before it didn't get the playername by parameter, it used scanner
   public void saveScore(String playerName) {
     assert(invariant());
     if (playerName == null || playerName.isEmpty()) {

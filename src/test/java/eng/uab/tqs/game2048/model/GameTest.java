@@ -29,6 +29,7 @@ class GameTest {
     generator = new GeneratorMock();
   }
 
+  //execution flow check in this class
   @Test
   void saveScoreWithout() throws Exception {
     fm.setConfig("EMPTY_FILE");
@@ -117,6 +118,7 @@ class GameTest {
     assertTrue(game.getExit());
   }
 
+  // simple loop test
   @Test
   void loopSimpleTest()
   {

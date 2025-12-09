@@ -1,5 +1,9 @@
 package eng.uab.tqs.game2048.model;
 
+//This class represents the blocks that will be
+//in the board, having value and color
+//this blocks will mix with each other if they
+// have the same value
 public class Block
 {
   private int value;
@@ -45,6 +49,9 @@ public class Block
     return this.color;
   }
 
+  //this method sets the values of
+  //the block to 0 and None
+  //to represents that the block has been eliminated
   public void resetBlock() {
     assert(invariant());
     this.value = 0;
@@ -56,6 +63,8 @@ public class Block
     assert(invariant());
   }
 
+  //this method mixes two blocks
+  //of the same value
   public void mix() {
     //preconditions
     assert(invariant());
@@ -63,6 +72,8 @@ public class Block
     assert(this.value > 0);
     assert(this.value < 2048);
 
+    //We duplicate the value of the block and
+    //set the color to the next one
     this.value = this.value * 2;
     this.color = InfoGame.Color.values()[this.color.getValue() + 1];
 
@@ -73,6 +84,8 @@ public class Block
     assert(invariant());
   }
 
+  //An auxiliar function to check if the value
+  //corresponds to the number of the color
   private int log2(int x) {
     if ( x!=0 )
     {

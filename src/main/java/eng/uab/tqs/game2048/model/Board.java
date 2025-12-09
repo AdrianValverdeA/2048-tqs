@@ -4,6 +4,10 @@ import java.util.Random;
 
 import static eng.uab.tqs.game2048.model.InfoGame.SIZE;
 
+//This class represents the board of the game
+//the board moves all the blocks that has in
+//checking the positions of the board
+//and looking if the blocks can be mixed
 public class Board {
 
   private Block[][] board;
@@ -112,12 +116,16 @@ public class Board {
     }
   }
 
+  //this method is usefull to create situations
+  //to check some specific cases
   public void randomInicialize() {
     assert invariant();
     gen.randomInicialize(getBoard());
     assert invariant();
   }
 
+  //This method returns the position of
+  //the block that will be generated
   public void random() {
     assert invariant();
     int x, y;
@@ -145,6 +153,8 @@ public class Board {
     return this.gen;
   }
 
+  //This method moves the block
+  //using the specific position
   public int[] moveBlock(int i, int j, char c) {
     assert invariant();
     //preconditions
@@ -185,6 +195,7 @@ public class Board {
     return coords;
   }
 
+  //This method checks if a move can be done
   public boolean canMove(int i, int j, char c) {
     assert invariant();
     //preconditions
@@ -226,6 +237,10 @@ public class Board {
     return result;
   }
 
+  //This method checks if two blocks
+  //can be mixed, if they can
+  //they will be mixed
+  //also modifies the score in each movement
   public boolean join(int i, int j, char c) {
     assert invariant();
     //preconditions
@@ -290,6 +305,10 @@ public class Board {
     return result;
   }
 
+  //This method moves all the blocks
+  //in the board, it calls all the previous
+  //method to check the position that the
+  //block will be
   public boolean moveBoard(char c) {
     assert invariant();
     //preconditions
@@ -441,7 +460,8 @@ public class Board {
     return done;
   }
 
-
+  //This method checks if a move can be done
+  //if any move can't be done the game is over
   public boolean isGameOver() {
     assert invariant();
     boolean movementDone = false;
@@ -465,6 +485,9 @@ public class Board {
     return gameOver;
   }
 
+  //This method checks if a block
+  //has the 2048 value, if its true
+  //the game will end, and the player wins
   public boolean isGameWinned() {
     assert invariant();
     for (int i = 0; i < SIZE; i++) {

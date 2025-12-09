@@ -13,6 +13,10 @@ public class GameMatch {
     return true;
   }
 
+  //This method is usefull to check via console
+  //the moves done in the game, to check
+  //all the logic was corrected created
+  //only for check when view wasn't done
   public void startGame() {
     assert(invariant());
     if (board.getRestart()) {
@@ -63,6 +67,8 @@ public class GameMatch {
     return board;
   }
 
+  //This method initializes the game
+  //that will be in the view
   public void startGameFX() {
     assert(invariant());
     if (board.getRestart()) {

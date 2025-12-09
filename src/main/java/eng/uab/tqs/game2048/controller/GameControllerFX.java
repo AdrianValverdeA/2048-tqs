@@ -5,6 +5,7 @@ import eng.uab.tqs.game2048.model.Game;
 import eng.uab.tqs.game2048.view.GameViewFX;
 import javafx.scene.Scene;
 
+//controller class, it gets the values from model and show them using view
 public class GameControllerFX implements GameViewFX.Listener {
 
   private final Game model;

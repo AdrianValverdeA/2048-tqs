@@ -11,12 +11,14 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+//View class
 public class GameViewFX {
 
   private Scene gameScene;
   private Stage stage;
   private GridPane grid;
 
+  //listener needed if there is a click on a button
   public interface Listener {
     void onStartGame();
     void onShowScores();
@@ -34,6 +36,7 @@ public class GameViewFX {
     this.grid = new GridPane();
   }
 
+  //show menu view
   public void showMenu() {
     Button bPlay = new Button("Play Game");
     Button bScores = new Button("Show Scores");
@@ -52,6 +55,7 @@ public class GameViewFX {
     bExit.setOnAction(e -> listener.onExit());
   }
 
+  //show scores view
   public void showScoresFX(List<String> scores) {
     VBox box = new VBox(15);
     box.setAlignment(Pos.CENTER);
@@ -88,7 +92,9 @@ public class GameViewFX {
     stage.show();
   }
 
+  //showgame view
   public void showGame(Board board) {
+    //avoid creation more than 1 gamescene
     if (gameScene == null) {
       grid.setAlignment(Pos.CENTER);
       grid.setHgap(10);
@@ -102,6 +108,7 @@ public class GameViewFX {
     update(board);
   }
 
+  //update the view
   public void update(Board board) {
     grid.getChildren().clear();
     Block[][] b = board.getBoard();
@@ -117,6 +124,7 @@ public class GameViewFX {
     }
   }
 
+  //load the image as for example a block
   private Image loadImage(int value) {
     if (value == 0) return null;
     return new Image(getClass().getResourceAsStream("/images/" + value + ".png"));
@@ -130,6 +138,7 @@ public class GameViewFX {
     void onNameEntered(String name);
   }
 
+  //endgame and getName view
   public void showEndGameAndAskName(String message, NameListener listener) {
     VBox box = new VBox(15);
     box.setAlignment(Pos.CENTER);

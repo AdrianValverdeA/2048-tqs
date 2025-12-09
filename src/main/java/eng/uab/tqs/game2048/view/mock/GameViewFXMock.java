@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 
 import java.util.List;
 
+//gameview mock
 public class GameViewFXMock extends GameViewFX {
 
   public boolean showGameCalled = false;
